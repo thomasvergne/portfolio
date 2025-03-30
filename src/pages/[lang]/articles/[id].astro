@@ -1,0 +1,101 @@
+---
+export const prerender = true;
+
+import Navigation from "#/components/Navigation.astro";
+import { buildTree } from "#/components/tree";
+import Tree from "#/components/Tree.astro";
+import type { Languages } from "#/i18n/ui";
+import Layout from "#/layouts/Layout.astro";
+import { render } from "astro:content";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = (await getCollection("blog")).filter(
+    (x) => !x.id.startsWith("_")
+  );
+
+  return posts.map((post) => ({
+    params: {
+      id: post.id.split("/").slice(1).join("/"),
+      lang: post.id.split("/")[0],
+    },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { lang } = Astro.params;
+const { Content, headings } = await render(post);
+
+const tree = buildTree(headings);
+---
+
+<Layout
+  title={post.data.title}
+  lang={post.id.split("/")[0]}
+  description={post.data.description}
+  image={post.data.image}
+  class="bg-neutral-100"
+>
+  <Navigation lang={lang as Languages} />
+
+  <div class="grid grid-cols-4 gap-8 py-32 max-w-4xl mx-auto">
+    <div class="col-span-3 mx-auto">
+      <h2 class="text-3xl font-semibold text-neutral-800">
+        {post.data.title}
+      </h2>
+
+      <p class="text-lg text-neutral-700/70 text-justify italic mt-2">
+        {post.data.description}
+      </p>
+      <div class="article prose mt-8">
+        <Content />
+      </div>
+    </div>
+
+    <nav
+      class="sticky top-4 self-start"
+      id="article-toc"
+      class:list={{
+        hidden: tree.length === 0,
+      }}
+    >
+      <span class="text text-neutral-800 font-semibold">
+        Table of contents
+      </span>
+      <Tree class="mt-2" headings={tree} rawHeadings={headings} />
+    </nav>
+  </div>
+</Layout>
+
+<script>
+  function addIntersectionObserver() {
+    const observer = new IntersectionObserver((sections) => {
+      sections.forEach((section) => {
+        const heading = section.target.querySelector("h1, h2, h3, h4, h5");
+        if (!heading) return;
+        const id = heading.getAttribute("id");
+
+        // Get the link to this section's heading
+        const link = document.querySelector<HTMLAnchorElement>(
+          `nav#article-toc a[href="#${id}"]`
+        );
+        if (!link) return;
+
+        // Add/remove the .active class based on whether the
+        // section is visible
+        if (section.intersectionRatio > 0) {
+          link.dataset.active = "true";
+        } else {
+          delete link.dataset.active;
+        }
+      });
+    });
+
+    document
+      .querySelectorAll(".article section")
+      .forEach((section) => observer.observe(section));
+  }
+
+  addIntersectionObserver();
+</script>
