@@ -56,7 +56,9 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [icon(), compress()],
+  integrations: [icon(), compress({
+    CSS: false,
+  })],
 
   adapter: vercel()
 });
