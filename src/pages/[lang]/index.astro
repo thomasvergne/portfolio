@@ -1,0 +1,264 @@
+---
+export const prerender = true;
+
+import { ui, type Languages } from "#/i18n/ui";
+import { useTranslations } from "#/i18n/utils";
+import Layout from "#/layouts/Layout.astro";
+import type { GetStaticPaths } from "astro";
+import { Image } from "astro:assets";
+import "#/assets/no-swipe.css";
+import { getCollection } from "astro:content";
+import Navigation from "#/components/Navigation.astro";
+
+export const getStaticPaths = (() => {
+  const languages = Object.keys(ui) as Languages[];
+
+  const paths = languages.map((lang) => ({
+    params: { lang },
+    props: { lang },
+  }));
+  return paths;
+}) satisfies GetStaticPaths;
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const images = {
+  lca: {
+    image: "/carousel/lca.png",
+    url: "https://lca-couture.fr",
+  },
+  ledonvert: {
+    image: "/carousel/ledonvert.png",
+    url: "https://ledonvert.org",
+  },
+  numa: {
+    image: "/carousel/numa.png",
+    url: "https://numa-app.fr",
+  },
+} as const;
+
+type ImageKey = keyof typeof images;
+
+const articles = (await getCollection("blog"))
+  .filter(({ id }) => !id.startsWith("_") && id.startsWith(lang))
+  .sort((a, b) => {
+    const aDate = new Date(a.data.date);
+    const bDate = new Date(b.data.date);
+
+    return bDate.getTime() - aDate.getTime();
+  });
+---
+
+<Layout title="Thomas Vergne" description="" class="bg-neutral-100">
+  <Navigation {lang} />
+
+  <header class="max-w-4xl mx-auto py-16">
+    <h2 class="text-4xl max-w-2xl leading-12 text-neutral-700">
+      {t("header")}
+    </h2>
+  </header>
+
+  <section
+    class="flex py-16 gap-8 overflow-x-hidden"
+    id="scrollable"
+    id="projects"
+  >
+    {
+      Object.entries(images).map(([key, { image, url }]) => {
+        const parsedKey = key as ImageKey;
+
+        const projectName = t(`carousel.${parsedKey}.title`);
+        const projectDescription = t(`carousel.${parsedKey}.description`);
+
+        return (
+          <div class="flex-[0_0_auto] w-2/5 relative group">
+            <Image
+              src={image}
+              alt="Project image"
+              class="w-full"
+              width={400}
+              height={300}
+            />
+            <div class="absolute inset-0 h-full w-full group-hover:bg-black/75 group-hover:backdrop-blur-lg transition-all duration-200 grid place-items-center opacity-0 group-hover:opacity-100">
+              <div class="max-w-sm w-full">
+                <h3 class="text-white text-2xl">{projectName}</h3>
+                <p class="text-white/80">{projectDescription}</p>
+
+                <a href={url}>
+                  <button class="text-white mt-4 hover:underline underline-offset-4">
+                    {t("carousel.button")}
+                  </button>
+                </a>
+              </div>
+            </div>
+          </div>
+        );
+      })
+    }
+  </section>
+
+  <section class="py-16" id="articles">
+    <header class="max-w-4xl mx-auto w-full">
+      <h2 class="text-4xl text-neutral-800">
+        {t("articles.title")}
+      </h2>
+
+      <p class="text-lg text-neutral-700/80 max-w-2xl mt-4">
+        {t("articles.description")}
+      </p>
+    </header>
+
+    <div class="grid grid-cols-2 gap-8 mt-16">
+      {
+        articles.map((article) => {
+          const { title, description, image } = article.data;
+          const { id } = article;
+
+          const url = `/${lang}/articles/${id.split("/").slice(1).join("/")}`;
+
+          return (
+            <article class="relative group">
+              <Image
+                src={image ?? "/articles/placeholder.png"}
+                alt="Project image"
+                class="w-full"
+                width={400}
+                height={300}
+              />
+
+              <div class="absolute inset-0 h-full w-full group-hover:bg-black/50 group-hover:backdrop-blur-lg transition-all duration-200 grid place-items-center opacity-0 group-hover:opacity-100">
+                <div class="max-w-md w-full">
+                  <h3 class="text-white text-2xl">{title}</h3>
+
+                  <p class="text-white/80 mt-4">{description}</p>
+
+                  <a
+                    href={url}
+                    class="text-white mt-4 inline-block hover:underline underline-offset-4"
+                  >
+                    {t("articles.read")}
+                  </a>
+                </div>
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+  </section>
+
+  <section class="py-16 mt-16 bg-white">
+    <header class="max-w-4xl mx-auto w-full">
+      <h2 class="text-4xl text-neutral-800">
+        {t("contact.title")}
+      </h2>
+
+      <div class="grid grid-cols-[1fr_auto] mt-8 gap-16">
+        <form action="/api/mail" method="POST">
+          <div class="grid grid-cols-2 mb-4 gap-4">
+            <div>
+              <label for="name" class="block text-neutral-800">
+                {t("contact.form.name")}
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                class="input mt-1"
+              />
+            </div>
+            <div>
+              <label for="email" class="block text-neutral-800">
+                {t("contact.form.email")}
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="input mt-1"
+              />
+            </div>
+          </div>
+
+          <input type="hidden" name="lang" value={lang} />
+
+          <div class="mb-4">
+            <label for="subject" class="block text-neutral-800">
+              {t("contact.form.subject")}
+            </label>
+            <input
+              type="text"
+              id="subject"
+              name="subject"
+              required
+              class="input mt-1"
+            />
+          </div>
+
+          <div class="mb-4">
+            <label for="message" class="block text-neutral-800">
+              {t("contact.form.message")}
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              required
+              class="input mt-1"
+              rows="4"></textarea>
+          </div>
+          <button
+            type="submit"
+            class="bg-neutral-800 text-white font-medium py-2 px-4"
+          >
+            {t("contact.form.send")}
+          </button>
+        </form>
+
+        <article>
+          <h3 class="text-xl text-neutral-800">
+            {t("contact.socials")}
+          </h3>
+
+          <ul class="space-y-4 mt-4">
+            <li>
+              <a
+                href="https://github.com/thomasvergne"
+                class="text-neutral-700/80"
+              >
+                github.com/thomasvergne
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://linkedin.com/in/thomasvrgn"
+                class="text-neutral-700/80"
+              >
+                in/thomasvergne
+              </a>
+            </li>
+
+            <li>
+              <a
+                href="https://discordapp.com/users/766231131720646666"
+                class="text-neutral-700/80"
+              >
+                discord.com/thomasvergne
+              </a>
+            </li>
+            <li>
+              <a
+                href="mailto:contact@thomas-vergne.fr"
+                class="text-neutral-700/80"
+              >
+                contact@thomas-vergne.fr
+              </a>
+            </li>
+          </ul>
+        </article>
+      </div>
+    </header>
+  </section>
+</Layout>
