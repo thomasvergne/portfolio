@@ -1,0 +1,54 @@
+---
+import Navigation from "#/components/Navigation.astro";
+import { getLangFromUrl, useTranslations } from "#/i18n/utils";
+import Layout from "#/layouts/Layout.astro";
+
+const success = Astro.url.searchParams.get("success");
+const error = Astro.url.searchParams.get("error") as
+  | "missingData"
+  | "invalidEmail"
+  | undefined;
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout
+  title={success ? t("contact.success.title") : t("contact.error.title")}
+  {lang}
+  description={success
+    ? t("contact.success.description")
+    : t("contact.error.description")}
+  class="bg-neutral-100"
+>
+  <Navigation {lang} />
+
+  <div class="max-w-4xl mx-auto w-full py-32 text-center">
+    <h2 class="text-4xl max-w-2xl mx-auto leading-12 text-neutral-700">
+      {success
+        ? t("contact.success.title")
+        : t("contact.error.title")}
+    </h2>
+
+    <p class="text-lg text-neutral-700/70 text-center italic mt-2">
+      {success
+        ? t("contact.success.description")
+        : t("contact.error.description")}
+    </p>
+
+    {error === "missingData" && (
+      <p class="text-lg text-red-500 mt-4">
+        {t("contact.error.missingData.description")}
+      </p>
+    )}
+    {error === "invalidEmail" && (
+      <p class="text-lg text-red-500 mt-4">
+        {t("contact.error.invalidEmail.description")}
+      </p>
+    )}
+
+    <a href={`/${lang}/`} class="text-lg mt-8 inline-block hover:underline underline-offset-4 text-neutral-800">
+      {t('contact.back')}
+    </a>
+  </div>
+</Layout>
