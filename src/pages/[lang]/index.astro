@@ -153,7 +153,7 @@ const articles = (await getCollection("blog"))
     </div>
   </section>
 
-  <section class="py-16 mt-16 bg-white max-md:px-4">
+  <section class="py-16 mt-16 bg-white max-md:px-4" id="contact">
     <header class="max-w-4xl mx-auto w-full">
       <h2 class="text-4xl text-neutral-800">
         {t("contact.title")}
@@ -161,7 +161,7 @@ const articles = (await getCollection("blog"))
 
       <div class="grid md:grid-cols-[1fr_auto] mt-8 gap-16">
         <form action="/api/mail" method="POST">
-          <div class="grid grid-cols-2 mb-4 gap-4">
+          <div class="grid sm:grid-cols-2 mb-4 gap-4">
             <div>
               <label for="name" class="block text-neutral-800">
                 {t("contact.form.name")}
