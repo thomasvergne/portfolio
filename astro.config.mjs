@@ -7,9 +7,9 @@ import icon from 'astro-icon';
 import rehypeKatex from 'rehype-katex';
 import remarkMath from 'remark-math';
 
-import node from '@astrojs/node';
-
 import compress from 'astro-compress';
+
+import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
@@ -58,7 +58,5 @@ export default defineConfig({
 
   integrations: [icon(), compress()],
 
-  adapter: node({
-    mode: 'standalone'
-  })
+  adapter: vercel()
 });
