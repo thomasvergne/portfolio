@@ -53,15 +53,16 @@ const articles = (await getCollection("blog"))
 <Layout title="Thomas Vergne" description="" class="bg-neutral-100">
   <Navigation {lang} />
 
-  <header class="max-w-4xl mx-auto py-16">
-    <h2 class="text-4xl max-w-2xl leading-12 text-neutral-700">
+  <header class="max-w-4xl mx-auto py-16 pt-32 max-md:px-4">
+    <h2
+      class="text-2xl md:text-4xl max-w-2xl leading-8 md:leading-12 text-neutral-700"
+    >
       {t("header")}
     </h2>
   </header>
 
   <section
-    class="flex py-16 gap-8 overflow-x-hidden"
-    id="scrollable"
+    class="md:flex grid py-16 gap-8 overflow-x-hidden scrollable"
     id="projects"
   >
     {
@@ -72,7 +73,7 @@ const articles = (await getCollection("blog"))
         const projectDescription = t(`carousel.${parsedKey}.description`);
 
         return (
-          <div class="flex-[0_0_auto] w-2/5 relative group">
+          <div class="flex-[0_0_auto] md:w-2/5 relative group">
             <Image
               src={image}
               alt="Project image"
@@ -80,13 +81,13 @@ const articles = (await getCollection("blog"))
               width={400}
               height={300}
             />
-            <div class="absolute inset-0 h-full w-full group-hover:bg-black/75 group-hover:backdrop-blur-lg transition-all duration-200 grid place-items-center opacity-0 group-hover:opacity-100">
+            <div class="md:absolute md:inset-0 md:h-full md:w-full md:group-hover:bg-black/75 md:group-hover:backdrop-blur-lg transition-all duration-200 grid md:place-items-center md:opacity-0 md:group-hover:opacity-100 p-4">
               <div class="max-w-sm w-full">
-                <h3 class="text-white text-2xl">{projectName}</h3>
-                <p class="text-white/80">{projectDescription}</p>
+                <h3 class="text-white max-md:text-neutral-800 text-2xl">{projectName}</h3>
+                <p class="text-white/80 max-md:text-neutral-700/70">{projectDescription}</p>
 
                 <a href={url}>
-                  <button class="text-white mt-4 hover:underline underline-offset-4">
+                  <button class="text-white max-md:text-neutral-700 mt-4 hover:underline underline-offset-4">
                     {t("carousel.button")}
                   </button>
                 </a>
@@ -99,7 +100,7 @@ const articles = (await getCollection("blog"))
   </section>
 
   <section class="py-16" id="articles">
-    <header class="max-w-4xl mx-auto w-full">
+    <header class="max-w-4xl mx-auto w-full p-4">
       <h2 class="text-4xl text-neutral-800">
         {t("articles.title")}
       </h2>
@@ -109,7 +110,7 @@ const articles = (await getCollection("blog"))
       </p>
     </header>
 
-    <div class="grid grid-cols-2 gap-8 mt-16">
+    <div class="grid md:grid-cols-2 gap-8 mt-16">
       {
         articles.map((article) => {
           const { title, description, image } = article.data;
@@ -127,15 +128,19 @@ const articles = (await getCollection("blog"))
                 height={300}
               />
 
-              <div class="absolute inset-0 h-full w-full group-hover:bg-black/50 group-hover:backdrop-blur-lg transition-all duration-200 grid place-items-center opacity-0 group-hover:opacity-100">
+              <div class="md:absolute md:inset-0 md:h-full md:w-full md:group-hover:bg-black/50 md:group-hover:backdrop-blur-lg transition-all duration-200 grid md:place-items-center md:opacity-0 md:group-hover:opacity-100 p-4">
                 <div class="max-w-md w-full">
-                  <h3 class="text-white text-2xl">{title}</h3>
+                  <h3 class="text-white max-md:text-neutral-800 text-2xl">
+                    {title}
+                  </h3>
 
-                  <p class="text-white/80 mt-4">{description}</p>
+                  <p class="text-white/80 max-md:text-neutral-700/70 mt-4">
+                    {description}
+                  </p>
 
                   <a
                     href={url}
-                    class="text-white mt-4 inline-block hover:underline underline-offset-4"
+                    class="text-white max-md:text-neutral-700 mt-4 inline-block hover:underline underline-offset-4"
                   >
                     {t("articles.read")}
                   </a>
@@ -148,13 +153,13 @@ const articles = (await getCollection("blog"))
     </div>
   </section>
 
-  <section class="py-16 mt-16 bg-white">
+  <section class="py-16 mt-16 bg-white max-md:px-4">
     <header class="max-w-4xl mx-auto w-full">
       <h2 class="text-4xl text-neutral-800">
         {t("contact.title")}
       </h2>
 
-      <div class="grid grid-cols-[1fr_auto] mt-8 gap-16">
+      <div class="grid md:grid-cols-[1fr_auto] mt-8 gap-16">
         <form action="/api/mail" method="POST">
           <div class="grid grid-cols-2 mb-4 gap-4">
             <div>
