@@ -30,7 +30,7 @@ scrollable?.addEventListener("wheel", (e) => {
   e.preventDefault();
 
   scrollable.scrollLeft += movement;
-}, { passive: true });
+});
 
 scrollable?.addEventListener("mousemove", (e) => {
   if (!isScrolling) return;
