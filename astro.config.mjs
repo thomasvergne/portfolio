@@ -9,6 +9,8 @@ import remarkMath from 'remark-math';
 
 import node from '@astrojs/node';
 
+import compress from 'astro-compress';
+
 // https://astro.build/config
 export default defineConfig({
   markdown: {
@@ -54,7 +56,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [icon()],
+  integrations: [icon(), compress()],
 
   adapter: node({
     mode: 'standalone'
