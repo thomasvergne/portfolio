@@ -39,8 +39,8 @@ const tree = buildTree(headings);
 >
   <Navigation lang={lang as Languages} />
 
-  <div class="grid grid-cols-4 gap-8 py-32 max-w-4xl mx-auto">
-    <div class="col-span-3 mx-auto">
+  <div class="grid sm:grid-cols-4 gap-8 py-32 max-w-4xl max-md:p-4 mx-auto">
+    <div class="sm:col-span-3 mx-auto">
       <h2 class="text-3xl font-semibold text-neutral-800">
         {post.data.title}
       </h2>
@@ -54,7 +54,7 @@ const tree = buildTree(headings);
     </div>
 
     <nav
-      class="sticky top-4 self-start"
+      class="sm:sticky top-4 self-start max-sm:order-first"
       id="article-toc"
       class:list={{
         hidden: tree.length === 0,
