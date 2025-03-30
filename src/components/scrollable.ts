@@ -1,10 +1,8 @@
-const scrollable = document.getElementById("scrollable");
+const scrollable = document.querySelector<HTMLDivElement>(".scrollable");
 
 if (!scrollable) {
   throw new Error("Scrollable element not found");
 }
-
-console.log(scrollable.clientWidth, scrollable.scrollWidth, scrollable.offsetWidth)
 
 scrollable.scrollLeft = (scrollable.scrollWidth - scrollable.clientWidth) / 2;
 

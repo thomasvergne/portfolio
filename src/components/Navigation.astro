@@ -1,6 +1,7 @@
 ---
 import { defaultLang, languagesNames, type Languages } from "#/i18n/ui";
 import { useTranslations } from "#/i18n/utils";
+import { Icon } from "astro-icon/components";
 
 interface Props {
   lang?: Languages;
@@ -11,10 +12,25 @@ const { lang = defaultLang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<nav class="max-w-4xl mx-auto py-16 grid grid-cols-[auto_1fr]">
-  <a href={`/${lang}`} class="text-3xl text-neutral-800">Thomas Vergne</a>
+<nav
+  class="max-w-4xl mx-auto py-16 grid md:grid-cols-[auto_1fr] max-md:p-8 max-md:bg-white"
+>
+  <div class="max-md:grid grid-cols-[auto_1fr] gap-x-8 items-center">
+    <a href={`/${lang}`} class="text-xl md:text-3xl text-neutral-800">Thomas Vergne</a>
 
-  <ul class="flex justify-end items-center gap-x-8 text-lg">
+    <label for="menu-toggle">
+      <Icon
+        name="tabler:menu-2"
+        class="text-3xl md:hidden text-neutral-800 justify-self-end"
+      />
+    </label>
+  </div>
+
+  <input type="checkbox" id="menu-toggle" class="peer hidden" />
+
+  <ul
+    class="flex max-md:flex-col justify-end md:items-center gap-y-4 gap-x-8 text-lg max-md:mt-8 max-md:peer-checked:flex max-md:hidden"
+  >
     <li>
       <a href={`/${lang}#projects`} class="text-neutral-700">
         {t("navbar.links.projects")}
