@@ -12,7 +12,13 @@ interface Props extends HTMLAttributes<"body"> {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = "/banner.png", lang = defaultLang, ...props } = Astro.props;
+const {
+  title,
+  description,
+  image = "/articles/placeholder.png",
+  lang = defaultLang,
+  ...props
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -23,8 +29,8 @@ const { title, description, image = "/banner.png", lang = defaultLang, ...props 
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link
       rel="icon"
-      type="image/svg"
-      href={new URL("/favicon.svg", Astro.url)}
+      type="image/png"
+      href={new URL("/picture.png", Astro.url)}
     />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="generator" content={Astro.generator} />
@@ -50,7 +56,7 @@ const { title, description, image = "/banner.png", lang = defaultLang, ...props 
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={new URL(image, Astro.url)} />
-    
+
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
