@@ -1,0 +1,33 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import type { Heading } from "#/components/tree";
+import type { MarkdownHeading } from "astro";
+
+interface Props extends HTMLAttributes<"div"> {
+  headings: Heading[];
+  rawHeadings: MarkdownHeading[];
+}
+
+const { headings, rawHeadings, class: className, ...props } = Astro.props;
+
+const lowestLevel = Math.min(...rawHeadings.map((heading) => heading.depth));
+
+const isNested = headings.some((heading) => heading.level > lowestLevel);
+---
+
+<ul class:list={[className, isNested && "ml-4"]} {...props}>
+  {
+    headings.map((heading) => (
+      <li>
+        <a
+          href={`#${heading.slug}`}
+          class="text-xs text-neutral-700/70 hover:text-neutral-700/50 data-[active]:text-neutral-700"
+        >
+          {heading.text}
+        </a>
+
+        <Astro.self headings={heading.children} {rawHeadings} />
+      </li>
+    ))
+  }
+</ul>
