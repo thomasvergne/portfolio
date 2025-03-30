@@ -1,0 +1,49 @@
+---
+import { defaultLang, languagesNames, type Languages } from "#/i18n/ui";
+import { useTranslations } from "#/i18n/utils";
+
+interface Props {
+  lang?: Languages;
+}
+
+const { lang = defaultLang } = Astro.props;
+
+const t = useTranslations(lang);
+---
+
+<nav class="max-w-4xl mx-auto py-16 grid grid-cols-[auto_1fr]">
+  <a href={`/${lang}`} class="text-3xl text-neutral-800">Thomas Vergne</a>
+
+  <ul class="flex justify-end items-center gap-x-8 text-lg">
+    <li>
+      <a href={`/${lang}#projects`} class="text-neutral-700">
+        {t("navbar.links.projects")}
+      </a>
+    </li>
+    <li>
+      <a href={`/${lang}#articles`} class="text-neutral-700">
+        {t("navbar.links.blog")}
+      </a>
+    </li>
+    <li>
+      <a href={`/${lang}#contact`} class="text-neutral-700">
+        {t("navbar.links.contact")}
+      </a>
+    </li>
+
+    <li>
+      <select
+        id="language-selector"
+        class="text-neutral-700 ps-0 focus:outline-none text-3xl"
+      >
+        {
+          Object.entries(languagesNames).map(([optionLang, [flag]]) => (
+            <option value={optionLang} selected={optionLang === lang}>
+              <span class="mr-8">{flag}</span>
+            </option>
+          ))
+        }
+      </select>
+    </li>
+  </ul>
+</nav>
