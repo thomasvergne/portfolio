@@ -5,9 +5,9 @@ import Layout from "#/layouts/Layout.astro";
 
 const success = Astro.url.searchParams.get("success");
 const error = Astro.url.searchParams.get("error") as
-  | "missingData"
-  | "invalidEmail"
-  | undefined;
+	| "missingData"
+	| "invalidEmail"
+	| undefined;
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);

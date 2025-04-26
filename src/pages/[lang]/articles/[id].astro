@@ -1,26 +1,27 @@
 ---
 export const prerender = true;
 
-import Navigation from "#/components/Navigation.astro";
-import { buildTree } from "#/components/tree";
-import Tree from "#/components/Tree.astro";
-import type { Languages } from "#/i18n/ui";
-import Layout from "#/layouts/Layout.astro";
+import { Image } from "astro:assets";
 import { render } from "astro:content";
 import { getCollection } from "astro:content";
+import Navigation from "#/components/Navigation.astro";
+import Tree from "#/components/Tree.astro";
+import { buildTree } from "#/components/tree";
+import type { Languages } from "#/i18n/ui";
+import Layout from "#/layouts/Layout.astro";
 
 export async function getStaticPaths() {
-  const posts = (await getCollection("blog")).filter(
-    (x) => !x.id.startsWith("_")
-  );
+	const posts = (await getCollection("blog")).filter(
+		(x) => !x.id.startsWith("_"),
+	);
 
-  return posts.map((post) => ({
-    params: {
-      id: post.id.split("/").slice(1).join("/"),
-      lang: post.id.split("/")[0],
-    },
-    props: { post },
-  }));
+	return posts.map((post) => ({
+		params: {
+			id: post.id.split("/").slice(1).join("/"),
+			lang: post.id.split("/")[0],
+		},
+		props: { post },
+	}));
 }
 
 const { post } = Astro.props;
@@ -39,8 +40,16 @@ const tree = buildTree(headings);
 >
   <Navigation lang={lang as Languages} />
 
-  <div class="grid sm:grid-cols-4 gap-8 py-32 max-w-4xl max-md:p-4 mx-auto">
-    <div class="sm:col-span-3 mx-auto">
+  <div class="grid sm:grid-cols-4 gap-8 py-8 max-w-4xl max-md:p-4 mx-auto">
+    <Image
+      src={post.data.image ?? "/articles/placeholder.png"}
+      alt={post.data.title}
+      width={800}
+      height={400}
+      class="w-full h-auto col-span-4"
+    />
+
+    <div class="sm:col-span-3" class:list={{ 'sm:!col-span-4': tree.length === 0 }}>
       <h2 class="text-3xl font-semibold text-neutral-800">
         {post.data.title}
       </h2>

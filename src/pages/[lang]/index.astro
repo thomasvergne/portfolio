@@ -1,53 +1,53 @@
 ---
 export const prerender = true;
 
-import { ui, type Languages } from "#/i18n/ui";
+import { Image } from "astro:assets";
+import type { GetStaticPaths } from "astro";
+import { type Languages, ui } from "#/i18n/ui";
 import { useTranslations } from "#/i18n/utils";
 import Layout from "#/layouts/Layout.astro";
-import type { GetStaticPaths } from "astro";
-import { Image } from "astro:assets";
 import "#/no-swipe.css";
 import { getCollection } from "astro:content";
 import Navigation from "#/components/Navigation.astro";
 
 export const getStaticPaths = (() => {
-  const languages = Object.keys(ui) as Languages[];
+	const languages = Object.keys(ui) as Languages[];
 
-  const paths = languages.map((lang) => ({
-    params: { lang },
-    props: { lang },
-  }));
-  return paths;
+	const paths = languages.map((lang) => ({
+		params: { lang },
+		props: { lang },
+	}));
+	return paths;
 }) satisfies GetStaticPaths;
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
 const images = {
-  lca: {
-    image: "/carousel/lca.png",
-    url: "https://lca-couture.fr",
-  },
-  ledonvert: {
-    image: "/carousel/ledonvert.png",
-    url: "https://ledonvert.org",
-  },
-  numa: {
-    image: "/carousel/numa.png",
-    url: "https://numa-app.fr",
-  },
+	lca: {
+		image: "/carousel/lca.png",
+		url: "https://lca-couture.fr",
+	},
+	ledonvert: {
+		image: "/carousel/ledonvert.png",
+		url: "https://ledonvert.org",
+	},
+	numa: {
+		image: "/carousel/numa.png",
+		url: "https://numa-app.fr",
+	},
 } as const;
 
 type ImageKey = keyof typeof images;
 
 const articles = (await getCollection("blog"))
-  .filter(({ id }) => !id.startsWith("_") && id.startsWith(lang))
-  .sort((a, b) => {
-    const aDate = new Date(a.data.date);
-    const bDate = new Date(b.data.date);
+	.filter(({ id }) => !id.startsWith("_") && id.startsWith(lang))
+	.sort((a, b) => {
+		const aDate = new Date(a.data.date);
+		const bDate = new Date(b.data.date);
 
-    return bDate.getTime() - aDate.getTime();
-  });
+		return bDate.getTime() - aDate.getTime();
+	});
 ---
 
 <Layout title="Thomas Vergne" description="" class="bg-neutral-100">

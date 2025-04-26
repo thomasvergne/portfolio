@@ -1,10 +1,10 @@
 ---
-import { defaultLang, languagesNames, type Languages } from "#/i18n/ui";
-import { useTranslations } from "#/i18n/utils";
 import { Icon } from "astro-icon/components";
+import { defaultLang, type Languages, languagesNames } from "#/i18n/ui";
+import { useTranslations } from "#/i18n/utils";
 
 interface Props {
-  lang?: Languages;
+	lang?: Languages;
 }
 
 const { lang = defaultLang } = Astro.props;
@@ -13,53 +13,60 @@ const t = useTranslations(lang);
 ---
 
 <nav
-  class="max-w-4xl mx-auto py-16 grid md:grid-cols-[auto_1fr] max-md:p-8 max-md:bg-white"
+    class="max-w-4xl mx-auto py-16 grid md:grid-cols-[auto_1fr] max-md:p-8 max-md:bg-white"
 >
-  <div class="max-md:grid grid-cols-[auto_1fr] gap-x-8 items-center">
-    <a href={`/${lang}`} class="text-xl md:text-3xl text-neutral-800">Thomas Vergne</a>
+    <div class="max-md:grid grid-cols-[auto_1fr] gap-x-8 items-center">
+        <a href={`/${lang}`} class="text-xl md:text-3xl text-neutral-800"
+            >Thomas Vergne</a
+        >
 
-    <label for="menu-toggle">
-      <Icon
-        name="tabler:menu-2"
-        class="text-3xl md:hidden text-neutral-800 justify-self-end"
-      />
-    </label>
-  </div>
+        <label for="menu-toggle">
+            <Icon
+                name="tabler:menu-2"
+                class="text-3xl md:hidden text-neutral-800 justify-self-end"
+            />
+        </label>
+    </div>
 
-  <input type="checkbox" id="menu-toggle" class="peer hidden" />
+    <input type="checkbox" id="menu-toggle" class="peer hidden" />
 
-  <ul
-    class="flex max-md:flex-col justify-end md:items-center gap-y-4 gap-x-8 text-lg max-md:mt-8 max-md:peer-checked:flex max-md:hidden"
-  >
-    <li>
-      <a href={`/${lang}#projects`} class="text-neutral-700">
-        {t("navbar.links.projects")}
-      </a>
-    </li>
-    <li>
-      <a href={`/${lang}#articles`} class="text-neutral-700">
-        {t("navbar.links.blog")}
-      </a>
-    </li>
-    <li>
-      <a href={`/${lang}#contact`} class="text-neutral-700">
-        {t("navbar.links.contact")}
-      </a>
-    </li>
+    <ul
+        class="flex max-md:flex-col justify-end md:items-center gap-y-4 gap-x-8 text-lg max-md:mt-8 max-md:peer-checked:flex max-md:hidden"
+    >
+        <li>
+            <a href={`/${lang}#projects`} class="text-neutral-700">
+                {t("navbar.links.projects")}
+            </a>
+        </li>
+        <li>
+            <a href={`/${lang}#articles`} class="text-neutral-700">
+                {t("navbar.links.blog")}
+            </a>
+        </li>
+        <li>
+            <a href={`/${lang}#contact`} class="text-neutral-700">
+                {t("navbar.links.contact")}
+            </a>
+        </li>
 
-    <li>
-      <select
-        id="language-selector"
-        class="text-neutral-700 ps-0 focus:outline-none text-3xl"
-      >
-        {
-          Object.entries(languagesNames).map(([optionLang, [flag]]) => (
-            <option value={optionLang} selected={optionLang === lang}>
-              <span class="mr-8">{flag}</span>
-            </option>
-          ))
-        }
-      </select>
-    </li>
-  </ul>
+        <li>
+            <select
+                id="language-selector"
+                class="text-neutral-700 ps-0 focus:outline-none text-3xl"
+            >
+                {
+                    Object.entries(languagesNames).map(
+                        ([optionLang, [flag]]) => (
+                            <option
+                                value={optionLang}
+                                selected={optionLang === lang}
+                            >
+                                <span class="mr-8">{flag}</span>
+                            </option>
+                        ),
+                    )
+                }
+            </select>
+        </li>
+    </ul>
 </nav>
