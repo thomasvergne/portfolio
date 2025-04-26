@@ -3,16 +3,16 @@ title: Algorithme d'inférence de types
 description: Un guide étape par étape pour mettre en œuvre l'inférence de types à partir de zéro dans un langage de programmation fonctionnelle.
 date: 2021-07-01
 author: Thomas Vergne
-image: /articles/typechecker.png
+image: /articles/typechecker.webp
 ---
 
-Dans les langages modernes, nombreux sont ceux qui font appel à des solutions de typage strictes pour garantir à minima la sécurité des applications développées. Ces solutions sont souvent basées sur des algorithmes robustes et éprouvés, tels que l'algorithme de Hindley-Milner. 
+Dans les langages modernes, nombreux sont ceux qui font appel à des solutions de typage strictes pour garantir à minima la sécurité des applications développées. Ces solutions sont souvent basées sur des algorithmes robustes et éprouvés, tels que l'algorithme de Hindley-Milner.
 
 Cet article se propose de vous guider pas à pas dans la mise en œuvre d'un algorithme d'inférence de types, en utilisant un langage de programmation fonctionnel comme exemple.
 
-## Notre langage 
+## Notre langage
 
-Nous allons utiliser le langage suivant pour illustrer notre algorithme d'inférence de types : 
+Nous allons utiliser le langage suivant pour illustrer notre algorithme d'inférence de types :
 
 ```bnf
 <program> ::= <expr>*
@@ -36,7 +36,7 @@ Quelques notions de cette grammaire sont à expliciter pour ceux n'ayant jamais 
 - `if <expr> then <expr> else <expr>` : permet de faire une conditionnelle, en retournant l'expression `<expr>` si la première expression est vraie, et l'autre sinon.
 - `<expr> <expr>` : permet d'appliquer une fonction à un argument. Par exemple, `f x` appliquera la fonction `f` à l'argument `x`. Voyez cela comme si l'on avait `f(x)` dans d'autres langages. Dans le cas où nous avons `f x y`, cela signifie grosso modo que nous avons `f(x)(y)` dans d'autres langages.
 
-## Types 
+## Types
 
 Il est temps désormais de définir ce que sont les types dans notre langage. Nous allons définir une grammaire pour les types, qui nous permettra de représenter les types de nos expressions.
 
@@ -68,9 +68,9 @@ C'est sûrement incompréhensible pour vous, mais ne vous inquiétez pas, nous a
 - $\alpha^k$ est une variable de type, qui peut être utilisée pour représenter n'importe quel type, la puissance $k$ signifie que cette variable peut être déclinée en $k$ types différents. Grosso modo, elle sert à représenter une multitudes de variables dans le quantificateur.
 - $\tau^k$ est un type, qui peut être utilisé pour représenter n'importe quel type, la puissance $k$ signifie que ce type utilise au moins $k$ variables de type. Grosso modo, il s'agit du type qui sera retourné par la fonction.
 
-## Environnement 
+## Environnement
 
-Pour typechecker nos programmes, nous avons le besoin de définir un environnement qui associe des variables à leur type généralisé. 
+Pour typechecker nos programmes, nous avons le besoin de définir un environnement qui associe des variables à leur type généralisé.
 
 Nous allons le définir comme une fonctio finie qui prend en entrée une variable et retourne son type généralisé :
 
@@ -81,4 +81,3 @@ $$
 $\text{VE}$ signifie "Value Environment", c'est-à-dire l'environnement de nos valeurs et plus précisément ici, de nos variables.
 
 ## Nos règles de typechecking
-
