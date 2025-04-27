@@ -39,6 +39,7 @@
 	.article {
 		@apply prose-p:text-neutral-700/70 prose-p:text-lg prose-p:text-justify;
 		@apply prose-headings:!text-neutral-800 prose-headings:font-bold;
+    @apply prose-li:text-neutral-700/70 prose-li:text-lg prose-li:text-justify;
 		@apply prose-a:text-neutral-700 prose-a:underline prose-a:hover:text-neutral-700/70;
 	}
 }
