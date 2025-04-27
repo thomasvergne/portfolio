@@ -10,6 +10,21 @@ interface Props {
 const { lang = defaultLang } = Astro.props;
 
 const t = useTranslations(lang);
+
+const links = [
+  {
+    name: "projects",
+    url: `/${lang}#projects`,
+  },
+  {
+    name: "blog",
+    url: `/${lang}#articles`,
+  },
+  {
+    name: "contact",
+    url: `/${lang}#contact`,
+  }
+] as const;
 ---
 
 <nav
@@ -33,21 +48,15 @@ const t = useTranslations(lang);
     <ul
         class="flex max-md:flex-col justify-end md:items-center gap-y-4 gap-x-8 text-lg max-md:mt-8 max-md:peer-checked:flex max-md:hidden"
     >
-        <li>
-            <a href={`/${lang}#projects`} class="text-neutral-700">
-                {t("navbar.links.projects")}
-            </a>
-        </li>
-        <li>
-            <a href={`/${lang}#articles`} class="text-neutral-700">
-                {t("navbar.links.blog")}
-            </a>
-        </li>
-        <li>
-            <a href={`/${lang}#contact`} class="text-neutral-700">
-                {t("navbar.links.contact")}
-            </a>
-        </li>
+        {
+          links.map(({ name, url }) => (
+            <li>
+              <a href={url} class="text-neutral-600/70 hover:text-neutral-800">
+                {t(`navbar.links.${name}`)}
+              </a>
+            </li>
+          ))
+        }
 
         <li>
             <select
