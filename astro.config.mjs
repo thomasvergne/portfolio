@@ -8,6 +8,7 @@ import compress from "astro-compress";
 import icon from "astro-icon";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
+import theme from 'shiki/themes/github-dark.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,6 +19,7 @@ export default defineConfig({
 			theme: {
 				bg: "#1b1a17",
 				fg: "#e8e2d9",
+        ...theme,
 			},
 		},
 	},
