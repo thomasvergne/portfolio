@@ -16,7 +16,7 @@ languageSelector.addEventListener("change", (event) => {
 	const currentHash = currentURL.hash;
 	const newURL = new URL(currentURL);
 	newURL.pathname = currentPath.replace(
-		/^\/[a-z]{2}(-[A-Z]{2})?/,
+		/^\/[a-z]{2}?/,
 		`/${selectedLang}`,
 	);
 	newURL.search = currentSearch;
