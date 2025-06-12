@@ -9,7 +9,7 @@ import Layout from "#/layouts/Layout.astro";
 import "#/no-swipe.css";
 import { getCollection } from "astro:content";
 import Navigation from "#/components/Navigation.astro";
-import { Icon } from "astro-icon/components";
+import Footer from "#/components/Footer.astro";
 
 export const getStaticPaths = (() => {
   const languages = Object.keys(ui) as Languages[];
@@ -49,31 +49,12 @@ const articles = (await getCollection("blog"))
 
     return bDate.getTime() - aDate.getTime();
   });
-
-const socialLinks = [
-  {
-    name: "github.com/thomasvergne",
-    url: "https://github.com/thomasvergne",
-  },
-  {
-    name: "in/thomasvergne",
-    url: "https://linkedin.com/in/thomasvrgn",
-  },
-  {
-    name: "discord.com/thomasvergne",
-    url: "https://discordapp.com/users/766231131720646666",
-  },
-  {
-    name: "contact@thomas-vergne.fr",
-    url: "mailto:contact@thomas-vergne.fr",
-  },
-];
 ---
 
 <Layout title="Thomas Vergne" description="" class="bg-neutral-100">
   <Navigation {lang} />
 
-  <header class="max-w-4xl mx-auto py-16 pt-32 max-md:px-4">
+  <header class="max-w-4xl mx-auto py-32 pt-16 max-md:px-4">
     <h2
       class="text-2xl md:text-4xl max-w-2xl leading-8 md:leading-12 text-neutral-700"
     >
@@ -190,96 +171,5 @@ const socialLinks = [
     </div>
   </section>
 
-  <section class="py-16 mt-16 bg-white max-md:px-4" id="contact">
-    <header class="max-w-4xl mx-auto w-full">
-      <h2 class="text-4xl text-neutral-800">
-        {t("contact.title")}
-      </h2>
-
-      <div class="grid md:grid-cols-[1fr_auto] mt-8 gap-16">
-        <form action="/api/mail" method="POST">
-          <div class="grid sm:grid-cols-2 mb-4 gap-4">
-            <div>
-              <label for="name" class="block text-neutral-800">
-                {t("contact.form.name")}
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                required
-                class="input mt-1"
-              />
-            </div>
-            <div>
-              <label for="email" class="block text-neutral-800">
-                {t("contact.form.email")}
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                class="input mt-1"
-              />
-            </div>
-          </div>
-
-          <input type="hidden" name="lang" value={lang} />
-
-          <div class="mb-4">
-            <label for="subject" class="block text-neutral-800">
-              {t("contact.form.subject")}
-            </label>
-            <input
-              type="text"
-              id="subject"
-              name="subject"
-              required
-              class="input mt-1"
-            />
-          </div>
-
-          <div class="mb-4">
-            <label for="message" class="block text-neutral-800">
-              {t("contact.form.message")}
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              required
-              class="input mt-1"
-              rows="4"></textarea>
-          </div>
-          <button
-            type="submit"
-            class="bg-neutral-800 text-white font-medium py-2 px-4 hover:bg-neutral-700 cursor-pointer"
-          >
-            {t("contact.form.send")}
-          </button>
-        </form>
-
-        <article>
-          <h3 class="text-xl text-neutral-800">
-            {t("contact.socials")}
-          </h3>
-
-          <ul class="space-y-4 mt-4">
-            {
-              socialLinks.map(({ name, url }) => (
-                <li>
-                  <a
-                    href={url}
-                    class="text-neutral-700/80 hover:text-neutral-800"
-                  >
-                    {name}
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </article>
-      </div>
-    </header>
-  </section>
+  <Footer {lang} />
 </Layout>
