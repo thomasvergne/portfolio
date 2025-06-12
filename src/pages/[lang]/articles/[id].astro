@@ -9,19 +9,21 @@ import Tree from "#/components/Tree.astro";
 import { buildTree } from "#/components/tree";
 import type { Languages } from "#/i18n/ui";
 import Layout from "#/layouts/Layout.astro";
+import { useTranslations } from "#/i18n/utils";
+import Footer from "#/components/Footer.astro";
 
 export async function getStaticPaths() {
-	const posts = (await getCollection("blog")).filter(
-		(x) => !x.id.startsWith("_"),
-	);
+  const posts = (await getCollection("blog")).filter(
+    (x) => !x.id.startsWith("_")
+  );
 
-	return posts.map((post) => ({
-		params: {
-			id: post.id.split("/").slice(1).join("/"),
-			lang: post.id.split("/")[0],
-		},
-		props: { post },
-	}));
+  return posts.map((post) => ({
+    params: {
+      id: post.id.split("/").slice(1).join("/"),
+      lang: post.id.split("/")[0] as Languages,
+    },
+    props: { post },
+  }));
 }
 
 const { post } = Astro.props;
@@ -29,6 +31,8 @@ const { lang } = Astro.params;
 const { Content, headings } = await render(post);
 
 const tree = buildTree(headings);
+
+const t = useTranslations(lang);
 ---
 
 <Layout
@@ -49,8 +53,11 @@ const tree = buildTree(headings);
       class="w-full h-auto sm:col-span-4 object-cover"
     />
 
-    <div class="sm:col-span-3" class:list={{ 'sm:!col-span-4': tree.length === 0 }}>
-      <h2 class="text-3xl font-semibold text-neutral-800">
+    <div
+      class="sm:col-span-3 max-w-full overflow-x-auto"
+      class:list={{ "sm:!col-span-4": tree.length === 0 }}
+    >
+      <h2 class="text-2xl font-semibold text-neutral-800">
         {post.data.title}
       </h2>
 
@@ -70,11 +77,12 @@ const tree = buildTree(headings);
       }}
     >
       <span class="text text-neutral-800 font-semibold">
-        Table of contents
+        {t("toc")}
       </span>
       <Tree class="mt-2" headings={tree} rawHeadings={headings} />
     </nav>
   </div>
+  <Footer {lang} />
 </Layout>
 
 <script>
