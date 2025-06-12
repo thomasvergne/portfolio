@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap");
 
 @import "tailwindcss";
-@import "tailwindcss-radix-colors/dist/gold.css";
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
@@ -10,14 +9,8 @@
 	--font-sans: "IBM Plex Sans", sans-serif;
 }
 
-@utility grid-effect {
-	background: linear-gradient(
-			to right,
-			rgba(255, 255, 255, 0.1) 1px,
-			transparent 1px
-		), linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-		var(--color-golddark-1);
-	background-size: 50px 50px;
+html {
+  scroll-behavior: smooth;
 }
 
 @utility input {
@@ -42,4 +35,18 @@
     @apply prose-li:text-neutral-700/70 prose-li:text-lg prose-li:text-justify;
 		@apply prose-a:text-neutral-700 prose-a:underline prose-a:hover:text-neutral-700/70;
 	}
+}
+
+.katex-display {
+  display: block;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  padding: 0.5rem 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.katex-display>.katex {
+  white-space: wrap;
+  /* Prevent KaTeX from wrapping mid-expression */
 }
