@@ -105,7 +105,7 @@ data Scheme
 
 Pour typechecker nos programmes, nous avons le besoin de définir un environnement qui associe des variables à leur type généralisé.
 
-Nous allons le définir comme une fonctio finie qui prend en entrée une variable et retourne son type généralisé :
+Nous allons le définir comme une fonction finie qui prend en entrée une variable et retourne son type généralisé :
 
 $$
 \text{VE} : x \mapsto \forall \alpha^k . \tau^k
