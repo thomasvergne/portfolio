@@ -1,5 +1,7 @@
 export const ui = {
 	en: {
+    toc: "Table of contents",
+
 		navbar: {
 			links: {
 				projects: "Projects",
@@ -78,6 +80,8 @@ export const ui = {
 	},
 
 	fr: {
+    toc: "Table des matières",
+
 		navbar: {
 			links: {
 				projects: "Projets",
