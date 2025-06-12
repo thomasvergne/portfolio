@@ -1,3 +1,9 @@
 ---
-return Astro.redirect("/en");
+const preferredLanguage = Astro.request.headers
+  .get("accept-language")
+  ?.split(",")[0]
+  .toLowerCase()
+  .split("-")[0] || "en";
+
+return Astro.redirect(`/${preferredLanguage}`, 302);
 ---
