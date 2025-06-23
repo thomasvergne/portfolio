@@ -1,4 +1,17 @@
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+
+@font-face {
+  font-family: "Nova Klasse";
+  src: url(/fonts/novaklasse.otf) format("opentype");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Nova Klasse";
+  src: url(/fonts/novaklasse-italic.otf) format("opentype");
+  font-weight: 400;
+  font-style: italic;
+}
 
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
@@ -6,16 +19,96 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme {
-	--font-sans: "IBM Plex Sans", sans-serif;
+  --color-background: #FFF7D1;
+  --color-text: #252323;
+
+  --color-sundown-50: #fef2f2;
+  --color-sundown-100: #ffe1e1;
+  --color-sundown-200: #ffc8c8;
+  --color-sundown-300: #ffb0b0;
+  --color-sundown-400: #fd6c6c;
+  --color-sundown-500: #f53e3e;
+  --color-sundown-600: #e22020;
+  --color-sundown-700: #be1717;
+  --color-sundown-800: #9d1717;
+  --color-sundown-900: #821a1a;
+  --color-sundown-950: #470808;
+
+  --color-peach-orange-50: #fff7ed;
+  --color-peach-orange-100: #ffedd5;
+  --color-peach-orange-200: #ffd09b;
+  --color-peach-orange-300: #ffb972;
+  --color-peach-orange-400: #fd913a;
+  --color-peach-orange-500: #fc7213;
+  --color-peach-orange-600: #ed5609;
+  --color-peach-orange-700: #c43f0a;
+  --color-peach-orange-800: #9c3210;
+  --color-peach-orange-900: #7d2b11;
+  --color-peach-orange-950: #441406;
+
+  --color-baja-white-50: #fffceb;
+  --color-baja-white-100: #fff7d1;
+  --color-baja-white-200: #ffea88;
+  --color-baja-white-300: #ffda4a;
+  --color-baja-white-400: #ffc720;
+  --color-baja-white-500: #f9a507;
+  --color-baja-white-600: #dd7d02;
+  --color-baja-white-700: #b75806;
+  --color-baja-white-800: #94430c;
+  --color-baja-white-900: #7a370d;
+  --color-baja-white-950: #461c02;
+
+  --font-title: Impact;
+  --font-serif: "Instrument Serif", serif;
 }
 
-html {
-  scroll-behavior: smooth;
+@utility overflow-touch {
+  overflow: overlay;
+  -webkit-overflow-scrolling: touch;
+}
+
+@utility text-stroke {
+  text-stroke: 5px --theme(--color-text);
+  -webkit-text-stroke: 5px var(--color-text);
 }
 
 @utility input {
 	@apply border border-neutral-300 p-2 px-4 w-full;
 	@apply focus:outline-none;
+}
+
+@utility text-extrusion {
+  text-shadow: 0px 2px 0 var(--color-text),
+                1px 3px 0 var(--color-text),
+                2px 4px 0 var(--color-text),
+                3px 5px 0 var(--color-text),
+                4px 6px 0 var(--color-text),
+                5px 7px 0 var(--color-text),
+                6px 8px 0 var(--color-text),
+                7px 9px 0 var(--color-text),
+                8px 10px 0 var(--color-text),
+                9px 11px 0 var(--color-text),
+                10px 12px 0 var(--color-text),
+
+                2px 0px var(--color-text),
+                3px 1px var(--color-text),
+                4px 2px var(--color-text),
+                5px 3px var(--color-text),
+                6px 4px var(--color-text),
+                7px 5px var(--color-text),
+                8px 6px var(--color-text),
+                9px 7px var(--color-text),
+                10px 8px var(--color-text),
+                11px 9px var(--color-text),
+                12px 10px var(--color-text),
+                
+                12px 12px var(--color-text),
+                
+                -1px -1px var(--color-text),
+                -1px 1px var(--color-text),
+                1px -1px var(--color-text),
+                1px 1px var(--color-text);
+  paint-order: stroke fill;
 }
 
 @layer components {
@@ -30,10 +123,11 @@ html {
 	}
 
 	.article {
-		@apply prose-p:text-neutral-700/70 prose-p:text-lg prose-p:text-justify;
-		@apply prose-headings:!text-neutral-800 prose-headings:font-bold;
-    @apply prose-li:text-neutral-700/70 prose-li:text-lg prose-li:text-justify;
-		@apply prose-a:text-neutral-700 prose-a:underline prose-a:hover:text-neutral-700/70;
+		@apply prose-p:font-serif prose-p:text-text/70 prose-p:text-justify prose-p:text-2xl;
+		@apply prose-headings:font-title prose-headings:lowercase prose-headings:font-bold prose-headings:text-extrusion prose-headings:!text-white;
+    @apply prose-li:font-serif prose-li:text-text/70 prose-li:text-2xl prose-li:text-justify;
+		@apply prose-a:text-text prose-a:underline prose-a:hover:text-text/70 prose-a:font-title;
+    @apply prose-code:text-lg prose-pre:text-lg;
 	}
 }
 
