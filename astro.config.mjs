@@ -8,60 +8,62 @@ import compress from "astro-compress";
 import icon from "astro-icon";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
-import theme from 'shiki/themes/github-dark.mjs';
+import theme from "shiki/themes/github-dark.mjs";
+
+import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
-	markdown: {
-		rehypePlugins: [sectionize, rehypeKatex],
-		remarkPlugins: [remarkMath],
-		shikiConfig: {
-			theme: {
-				bg: "#1b1a17",
-				fg: "#e8e2d9",
+  markdown: {
+    rehypePlugins: [sectionize, rehypeKatex],
+    remarkPlugins: [remarkMath],
+    shikiConfig: {
+      theme: {
+        bg: "#1b1a17",
+        fg: "#e8e2d9",
         ...theme,
-			},
-		},
-	},
+      },
+    },
+  },
 
-	site: "https://thomas-vergne.fr",
+  site: "https://thomas-vergne.fr",
 
-	env: {
-		schema: {
-			EMAIL_PASSWORD: envField.string({
-				context: "server",
-				access: "secret",
-			}),
+  env: {
+    schema: {
+      EMAIL_PASSWORD: envField.string({
+        context: "server",
+        access: "secret",
+      }),
 
-			EMAIL_USERNAME: envField.string({
-				context: "server",
-				access: "secret",
-			}),
+      EMAIL_USERNAME: envField.string({
+        context: "server",
+        access: "secret",
+      }),
 
-			EMAIL_HOST: envField.string({
-				context: "server",
-				access: "secret",
-			}),
+      EMAIL_HOST: envField.string({
+        context: "server",
+        access: "secret",
+      }),
 
-			EMAIL_PORT: envField.string({
-				context: "server",
-				access: "secret",
-			}),
-		},
-	},
+      EMAIL_PORT: envField.string({
+        context: "server",
+        access: "secret",
+      }),
+    },
+  },
 
-	output: "server",
+  output: "server",
 
-	vite: {
-		plugins: [tailwindcss()],
-	},
+  vite: {
+    plugins: [tailwindcss()],
+  },
 
-	integrations: [
-		icon(),
-		compress({
-			CSS: false,
-		}),
-	],
+  integrations: [
+    icon(),
+    compress({
+      CSS: false,
+    }),
+  ],
 
-	adapter: vercel(),
+  adapter: vercel(),
 });
