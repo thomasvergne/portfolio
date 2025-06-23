@@ -4,4 +4,5 @@ description: A step-by-step guide to implementing untyped closure conversion in 
 date: 2021-07-01
 author: Thomas Vergne
 image: /articles/closure-conversion.webp
+color: sundown
 ---

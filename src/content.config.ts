@@ -10,6 +10,12 @@ const blog = defineCollection({
 		description: z.string().min(10).max(140),
 		date: z.coerce.date(),
 		image: z.string().optional(),
+		color: z.union([
+			z.literal("green"),
+      z.literal("white"),
+      z.literal("sundown"),
+      z.literal("peach-orange"),
+		]),
 	}),
 });
 

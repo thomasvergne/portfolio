@@ -4,6 +4,7 @@ description: Un guide étape par étape pour mettre en œuvre la conversion de c
 date: 2021-07-01
 author: Thomas Vergne
 image: /articles/closure-conversion.webp
+color: sundown
 ---
 
 Comment représenter les closures dans un langage de programmation ? Qu'est-ce qu'une closure tout d'abord ? Pourquoi devrait-on s'en soucier ? 

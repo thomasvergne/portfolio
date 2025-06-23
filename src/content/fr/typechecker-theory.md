@@ -4,6 +4,7 @@ description: Un guide étape par étape pour mettre en œuvre l'inférence de ty
 date: 2021-07-01
 author: Thomas Vergne
 image: /articles/typechecker-theory.webp
+color: peach-orange
 ---
 
 Dans les langages modernes, nombreux sont ceux qui font appel à des solutions de typage strictes pour garantir à minima la sécurité des applications développées. Ces solutions sont souvent basées sur des algorithmes robustes et éprouvés, tels que l'algorithme de Hindley-Milner.
