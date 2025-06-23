@@ -24,15 +24,20 @@ const {
 <script>
   const elements = document.querySelectorAll(".marquee");
 
-  elements.forEach((element) => {
-    const div = element as HTMLDivElement;
+  function updateMarqueeWidth() {
+    elements.forEach((element) => {
+      const div = element as HTMLDivElement;
 
-    const firstHiddenItem = div.querySelector(
-      "#first-hidden-item"
-    ) as HTMLElement;
+      const firstHiddenItem = div.querySelector(
+        "#first-hidden-item"
+      ) as HTMLElement;
 
-    div.style.setProperty("--width", `${firstHiddenItem.offsetLeft}px`);
-  });
+      div.style.setProperty("--width", `${firstHiddenItem.offsetLeft}px`);
+    });
+  }
+
+  window.addEventListener("resize", updateMarqueeWidth);
+  window.addEventListener("load", updateMarqueeWidth);
 </script>
 
 <div

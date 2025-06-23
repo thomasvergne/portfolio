@@ -28,59 +28,29 @@ const links = [
 ] as const;
 ---
 
-<nav
-  class="max-w-4xl mx-auto py-16 grid md:grid-cols-[auto_1fr] max-lg:p-8 max-md:bg-white"
->
-  <div class="max-md:grid grid-cols-[auto_1fr] gap-x-8 items-center">
-    <div class="flex items-center">
-      <Image
-        src="/picture.webp"
-        alt="Thomas Vergne"
-        class="size-20 rounded-full object-cover"
-        width={80}
-        height={80}
-      />
-      <a href={`/${lang}`} class="text-xl md:text-3xl text-neutral-800 ml-6">
-        Thomas Vergne
-      </a>
-    </div>
-
-    <label for="menu-toggle">
-      <Icon
-        name="tabler:menu-2"
-        class="text-3xl md:hidden text-neutral-800 justify-self-end"
-      />
-    </label>
-  </div>
-
-  <input type="checkbox" id="menu-toggle" class="peer hidden" />
-
-  <ul
-    class="flex max-md:flex-col justify-end md:items-center gap-y-4 gap-x-8 text-lg max-md:mt-8 max-md:peer-checked:flex max-md:hidden"
+<div class="border-b-[10px] border-text">
+  <nav
+    class="py-2 pt-8 px-4 max-w-4xl md:border-x-[10px] border-text mx-auto flex flex-row justify-between items-center"
   >
-    {
-      links.map(({ name, url }) => (
-        <li>
-          <a href={url} class="text-neutral-600/70 hover:text-neutral-800">
+    <a href="/" class="mx-auto">
+      <img src="/picture.svg" alt="Picture logo" class="h-16 w-auto" />
+    </a>
+  </nav>
+
+  <div class="mx-auto">
+    <div
+      class="px-4 py-8 md:border-x-[10px] max-w-4xl mx-auto flex items-center justify-center gap-x-8"
+    >
+      {
+        links.map(({ name, url }) => (
+          <a
+            href={url}
+            class="text-text font-title lowercase text-xl hover:text-extrusion hover:text-white transition-all duration-200"
+          >
             {t(`navbar.links.${name}`)}
           </a>
-        </li>
-      ))
-    }
-
-    <li>
-      <select
-        id="language-selector"
-        class="text-neutral-700 ps-0 focus:outline-none text-3xl"
-      >
-        {
-          Object.entries(languagesNames).map(([optionLang, [flag]]) => (
-            <option value={optionLang} selected={optionLang === lang}>
-              <span class="mr-8">{flag}</span>
-            </option>
-          ))
-        }
-      </select>
-    </li>
-  </ul>
-</nav>
+        ))
+      }
+    </div>
+  </div>
+</div>

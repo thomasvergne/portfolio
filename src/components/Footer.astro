@@ -1,13 +1,15 @@
 ---
 import type { Languages } from "#/i18n/ui";
 import { useTranslations } from "#/i18n/utils";
+import type { HTMLAttributes } from "astro/types";
 import Button from "./Button.astro";
+import { cn } from "./css";
 
-interface Props {
+interface Props extends HTMLAttributes<"footer"> {
   lang: Languages;
 }
 
-const { lang } = Astro.props;
+const { lang, class: className, ...props } = Astro.props;
 
 const t = useTranslations(lang);
 
@@ -32,8 +34,12 @@ const socialLinks = [
 ---
 
 <footer
-  class="py-32 max-md:py-16 bg-sundown-300 relative z-10 border-b-[10px] border-text"
+  class={cn(
+    "py-32 max-md:py-16 bg-peach-orange-300 relative z-10 border-b-[10px] border-text",
+    className
+  )}
   id="contact"
+  {...props}
 >
   <div class="max-w-6xl mx-auto px-8">
     <h2
@@ -50,6 +56,8 @@ const socialLinks = [
 
     <div class="grid md:grid-cols-3 gap-8">
       <form class="mt-16 space-y-8 col-span-2" action="/api/mail" method="POST">
+        <input type="text" name="lang" value={lang} hidden />
+
         <div class="grid grid-cols-2 gap-8">
           <fieldset>
             <label
