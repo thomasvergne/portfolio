@@ -15,7 +15,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const {
     title,
     description,
-    image = "/articles/placeholder.webp",
+    image = "/background.svg",
     lang = defaultLang,
     ...props
 } = Astro.props;
@@ -29,8 +29,8 @@ const {
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <link
             rel="icon"
-            type="image/webp"
-            href={new URL("/picture.webp", Astro.url)}
+            type="image/svg+xml"
+            href={new URL("/favicon.svg", Astro.url)}
         />
         <link rel="sitemap" href="/sitemap-index.xml" />
         <meta name="generator" content={Astro.generator} />
@@ -64,8 +64,13 @@ const {
             crossorigin="anonymous"
         />
 
-        <script src="#/components/language-selector.ts"></script>
         <script src="#/components/scrollable.ts"></script>
+
+        <script>
+          import locomotiveScroll from "locomotive-scroll";
+          
+          document.addEventListener('DOMContentLoaded', () => new locomotiveScroll());
+        </script>
 
         <slot name="head" />
     </head>
