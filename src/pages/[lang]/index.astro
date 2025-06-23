@@ -112,16 +112,11 @@ const articles = (await getCollection("blog"))
             <Fragment set:html={circles} />
         </div>
 
-        <div class="relative flex-auto flex flex-col justify-center">
+        <div class="relative flex-auto flex flex-col justify-center px-4">
             <h1
                 class="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black font-title text-center relative text-extrusion text-white"
             >
                 <span class="relative">
-                    <!-- <img
-            src="/illustrations/sparkles.svg"
-            alt="Decorative sparkles"
-            class="absolute -z-10 -top-32 -right-44"
-          /> -->
                     {t("header.firstPart")}
                 </span>
                 <br />
@@ -132,7 +127,7 @@ const articles = (await getCollection("blog"))
             </h1>
 
             <Button
-                class="mt-12 mx-auto"
+                class="mt-12 mx-auto w-full"
                 kind="peach-orange"
                 data-scroll-to
                 href="#contact"
@@ -164,15 +159,15 @@ const articles = (await getCollection("blog"))
     </header>
 
     <section
-        class="py-32 bg-peach-orange-300 border-b-[10px] border-text overflow-x-hidden"
+        class="py-8 sm:py-32 bg-peach-orange-300 border-b-[10px] border-text overflow-x-hidden"
     >
         <h2
-            class="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-title text-center text-extrusion text-white max-md:leading-16"
+            class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-title text-center text-extrusion text-white max-md:leading-16"
         >
             {t("projects.title.firstPart")}
             <br />
             <span
-                class="font-serif text-[3.5rem] md:text-[5rem] lg:text-[6.25rem] xl:text-[7.75rem]"
+                class="font-serif text-[2.75rem] sm:text-[3.5rem] md:text-[5rem] lg:text-[6.25rem] xl:text-[7.75rem]"
             >
                 {t("projects.title.secondPart")}
             </span>
@@ -212,7 +207,7 @@ const articles = (await getCollection("blog"))
             }
         </Marquee>
 
-        <div class="md:hidden z-20 grid px-8 gap-8 mt-16">
+        <div class="md:hidden z-20 grid px-4 gap-4 mt-16">
             {
                 images.map((image) => (
                     <article class="border-[5px] border-text">
@@ -233,7 +228,7 @@ const articles = (await getCollection("blog"))
                             </p>
                             <a
                                 href={image.url}
-                                class="mt-4 inline-block px-6 py-3 bg-text text-white font-semibold hover:bg-opacity-70 transition-colors font-title lowercase tracking-wider"
+                                class="mt-4 inline-block px-6 py-3 bg-text text-white font-semibold hover:bg-opacity-70 transition-colors font-title lowercase tracking-wider w-full text-center"
                             >
                                 {t("projects.cta")}
                             </a>
@@ -246,27 +241,27 @@ const articles = (await getCollection("blog"))
 
     <section
         id="articles"
-        class="py-32 px-2 bg-background relative z-10 overflow-hidden border-b-[10px] border-text"
+        class="py-8 sm:py-32 px-4 bg-background relative z-10 overflow-hidden border-b-[10px] border-text"
     >
         <div
-            class="absolute bottom-0 right-0 -z-10 translate-y-[55%] translate-x-[55%]"
+            class="absolute bottom-0 right-0 -z-10 translate-y-[55%] translate-x-[55%] overflow-x-hidden"
         >
             <Fragment set:html={circles} />
         </div>
 
         <h2
-            class="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-title text-white text-extrusion text-center"
+            class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-title text-white text-extrusion text-center"
         >
             {t("articles.title.firstPart")}
             <br />
             <span
-                class="text-[3.5rem] md:text-[5rem] lg:text-[6.25rem] xl:text-[7.75rem] font-serif"
+                class="text-[2.75rem] sm:text-[3.5rem] md:text-[5rem] lg:text-[6.25rem] xl:text-[7.75rem] font-serif"
                 >{t("articles.title.secondPart")}</span
             >
         </h2>
 
         <div
-            class="scrollable py-32 flex flex-row relative overflow-x-hidden z-10 gap-1 gap-x-16 gap-y-8 px-6 justify-center max-xl:grid"
+            class="scrollable w-full py-8 sm:py-32 flex flex-row relative overflow-x-hidden z-10 gap-1 gap-x-16 gap-y-8 justify-center max-xl:grid"
         >
             {
                 articles.map((article) => (
@@ -290,7 +285,7 @@ const articles = (await getCollection("blog"))
 
                         <article
                             class={cn(
-                                "border-[5px] border-text p-8 md:hidden",
+                                "border-[5px] border-text p-4 sm:p-8 md:hidden",
                                 firstColor[article.data.color],
                             )}
                         >
@@ -302,7 +297,7 @@ const articles = (await getCollection("blog"))
                             </p>
                             <a
                                 href={`/${lang}/articles/${article.id.split("/").slice(1).join("/")}`}
-                                class="mt-4 inline-block px-6 py-3 bg-text text-white font-semibold hover:bg-opacity-70 transition-colors font-title lowercase tracking-wider"
+                                class="mt-4 inline-block px-6 py-3 bg-text text-white font-semibold hover:bg-opacity-70 transition-colors font-title lowercase tracking-wider w-full text-center"
                             >
                                 {t("articles.read")}
                             </a>
