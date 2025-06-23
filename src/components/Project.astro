@@ -4,6 +4,8 @@ import { cva, type VariantProps } from "cva";
 import { cn } from "./css";
 import { Icon } from "astro-icon/components";
 import { firstColor, secondColor, thirdColor } from "./colors";
+import { useTranslations } from "#/i18n/utils";
+import type { Languages } from "#/i18n/ui";
 
 export interface Project {
   title: string;
@@ -24,9 +26,12 @@ interface Props
   extends HTMLAttributes<"button">,
     VariantProps<typeof projectStyle> {
   project?: Project;
+  lang: Languages;
 }
 
-const { project, kind = "black", class: className, ...props } = Astro.props;
+const { project, kind = "black", class: className, lang, ...props } = Astro.props;
+
+const t = useTranslations(lang);
 ---
 
 <div class="relative group" {...props}>
@@ -57,7 +62,7 @@ const { project, kind = "black", class: className, ...props } = Astro.props;
             href={project.url}
             class="mt-4 px-6 py-3 pr-3 bg-text text-white font-semibold hover:bg-opacity-70 transition-colors font-title lowercase tracking-wider text-xl flex items-center justify-between group/link overflow-hidden"
           >
-            access this project
+            {t("projects.cta")}
             <span class="relative group-hover/link:-translate-y-12 transition-all duration-300">
               <Icon name="tabler:arrow-up-right" class="w-6 h-6" />
               <Icon
