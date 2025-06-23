@@ -8,8 +8,16 @@ import { useTranslations } from "#/i18n/utils";
 import Layout from "#/layouts/Layout.astro";
 import "#/no-swipe.css";
 import { getCollection } from "astro:content";
-import Navigation from "#/components/Navigation.astro";
+import Marquee from "#/components/Marquee.astro";
+import Button from "#/components/Button.astro";
+import circles from "/illustrations/circles.svg?raw";
+import {
+  type Project as ProjectType,
+  default as Project,
+} from "#/components/Project.astro";
 import Footer from "#/components/Footer.astro";
+import { cn } from "#/components/css";
+import { firstColor } from "#/components/colors";
 
 export const getStaticPaths = (() => {
   const languages = Object.keys(ui) as Languages[];
@@ -24,22 +32,40 @@ export const getStaticPaths = (() => {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
-const images = {
-  lca: {
-    image: "/carousel/lca.webp",
-    url: "https://lca-couture.fr",
-  },
-  ledonvert: {
+const images = [
+  {
+    title: "Le Don vert",
+    description:
+      "Un site de don de plantes entre particuliers dans toute la France.",
     image: "/carousel/ledonvert.webp",
     url: "https://ledonvert.org",
+    color: "green",
   },
-  numa: {
+  {
+    title: "LCA",
+    description: "Site pour une couturère geek, éthique et écoresponsable.",
+    image: "/carousel/lca.webp",
+    url: "https://lca-couture.fr",
+    color: "sundown",
+  },
+  {
+    title: "NUMA",
+    description:
+      "Un site de gestion des émotions sous la forme d'agenda intelligent.",
     image: "/carousel/numa.webp",
     url: "https://numa-app.fr",
+    color: "white",
   },
-} as const;
+  {
+    title: "Dutoit Automobile",
+    description: "Un site pour un garage automobile spécialisé dans les 4x4.",
+    image: "/carousel/dutoitautomobile.webp",
+    url: "https://dutoitautomobile.fr",
+    color: "sundown",
+  },
+] satisfies ProjectType[];
 
-type ImageKey = keyof typeof images;
+// type ImageKey = keyof typeof images;
 
 const articles = (await getCollection("blog"))
   .filter(({ id }) => !id.startsWith("_") && id.startsWith(lang))
@@ -51,122 +77,223 @@ const articles = (await getCollection("blog"))
   });
 ---
 
-<Layout title="Thomas Vergne" description="" class="bg-neutral-100">
-  <Navigation {lang} />
-
-  <header class="max-w-4xl mx-auto py-32 pt-16 max-md:pb-0 max-md:px-4">
-    <h2
-      class="text-2xl md:text-4xl max-w-2xl leading-8 md:leading-12 text-neutral-700"
+<Layout title="Thomas Vergne" description="" class="bg-text">
+  <header
+    class="relative overflow-hidden h-[950px] max-h-screen flex flex-col bg-background z-10"
+  >
+    <Marquee
+      speed={100}
+      class="bg-sundown-300 inline-flex items-center py-4 border-y-[10px] border-text"
+      should-not-stop-on-hover
     >
-      {t("header")}
-    </h2>
+      {
+        Array.from({ length: 10 }).map((_, i) => (
+          <>
+            <span
+              class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black font-title uppercase italic text-text"
+              id={i > 5 ? "first-hidden-item" : ""}
+            >
+              {t("header.marquee")}
+            </span>
+            <span class="ml-2">&#x25cf;</span>
+          </>
+        ))
+      }
+    </Marquee>
+
+    <div
+      class="absolute bottom-0 right-0 -z-40 translate-y-[55%] translate-x-[55%]"
+    >
+      <Fragment set:html={circles} />
+    </div>
+
+    <div class="relative flex-auto flex flex-col justify-center">
+      <h1
+        class="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black font-title text-center relative text-extrusion text-white"
+      >
+        <span class="relative">
+          <!-- <img
+            src="/illustrations/sparkles.svg"
+            alt="Decorative sparkles"
+            class="absolute -z-10 -top-32 -right-44"
+          /> -->
+          {t("header.firstPart")}
+        </span>
+        <br />
+        <span
+          class="font-serif lowercase text-[5rem] md:text-[6.25rem] lg:text-[7.75rem] xl:text-[9.75rem]"
+          >{t("header.secondPart")}</span
+        >
+      </h1>
+
+      <Button
+        class="mt-12 mx-auto"
+        kind="peach-orange"
+        data-scroll-to
+        href="#contact"
+      >
+        {t("header.cta")}
+      </Button>
+    </div>
+
+    <Marquee
+      speed={100}
+      direction="reverse"
+      class="bg-green-300 inline-flex items-center py-4 border-y-[10px] border-text"
+      should-not-stop-on-hover
+    >
+      {
+        Array.from({ length: 10 }).map((_, i) => (
+          <>
+            <span
+              class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black font-title uppercase italic text-text"
+              id={i > 5 ? "first-hidden-item" : ""}
+            >
+              {t("header.marquee")}
+            </span>
+            <span class="ml-2">&#x25cf;</span>
+          </>
+        ))
+      }
+    </Marquee>
   </header>
 
-  <div class="relative">
-    <span class="absolute -top-8 right-16 max-md:hidden">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 25 25"
-        class="size-16 fill-neutral-700"
+  <section
+    class="py-32 bg-peach-orange-300 border-b-[10px] border-text overflow-x-hidden"
+  >
+    <h2
+      class="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-title text-center text-extrusion text-white max-md:leading-16"
+    >
+      {t("projects.title.firstPart")}
+      <br />
+      <span
+        class="font-serif text-[3.5rem] md:text-[5rem] lg:text-[6.25rem] xl:text-[7.75rem]"
       >
-        <path
-          d="m17.5 5.999-.707.707 5.293 5.293H1v1h21.086l-5.294 5.295.707.707L24 12.499l-6.5-6.5z"
-          data-name="Right"></path>
-      </svg>
-    </span>
-    <section
-      class="md:flex grid py-16 gap-8 overflow-x-hidden scrollable relative"
-      id="projects"
+        {t("projects.title.secondPart")}
+      </span>
+    </h2>
+
+    <Marquee gap={64} class="mt-32 max-md:hidden" speed={100}>
+      {
+        images.map((image) => (
+          <Project project={image} kind={image.color}>
+            <Image
+              src={image.image}
+              alt={image.description}
+              width={400}
+              height={300}
+              class="h-full object-cover"
+            />
+          </Project>
+        ))
+      }
+      {
+        images.map((image) => (
+          <Project project={image} id="first-hidden-item" kind={image.color}>
+            <Image
+              src={image.image}
+              alt={image.description}
+              width={400}
+              height={300}
+              class="h-full object-cover"
+            />
+          </Project>
+        ))
+      }
+    </Marquee>
+
+    <div class="md:hidden z-20 grid px-8 gap-8 mt-16">
+      {
+        images.map((image) => (
+          <article class="border-[5px] border-text">
+            <Image
+              src={image.image}
+              alt={image.description}
+              width={400}
+              height={300}
+              class="h-96 w-full object-cover border-b-[5px] border-text"
+            />
+
+            <div class={cn("p-4", firstColor[image.color])}>
+              <h3 class="text-2xl font-bold font-title text-text lowercase">
+                {image.title}
+              </h3>
+              <p class="mt-2 text-lg text-text">{image.description}</p>
+              <a
+                href={image.url}
+                class="mt-4 inline-block px-6 py-3 bg-text text-white font-semibold hover:bg-opacity-70 transition-colors font-title lowercase tracking-wider"
+              >
+                {t("projects.cta")}
+              </a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section
+    id="articles"
+    class="py-32 px-2 bg-background relative z-10 overflow-hidden border-b-[10px] border-text"
+  >
+    <div
+      class="absolute bottom-0 right-0 -z-10 translate-y-[55%] translate-x-[55%]"
+    >
+      <Fragment set:html={circles} />
+    </div>
+
+    <h1
+      class="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-title text-white text-extrusion text-center"
+    >
+      {t("articles.title.firstPart")}
+      <br />
+      <span
+        class="text-[3.5rem] md:text-[5rem] lg:text-[6.25rem] xl:text-[7.75rem] font-serif"
+        >{t("articles.title.secondPart")}</span
+      >
+    </h1>
+
+    <div
+      class="scrollable py-32 flex flex-row relative overflow-x-hidden z-10 gap-1 gap-x-16 gap-y-8 px-6 justify-center max-xl:grid"
     >
       {
-        Object.entries(images).map(([key, { image, url }]) => {
-          const parsedKey = key as ImageKey;
+        articles.map((article) => (
+          <>
+            <Project
+              class="h-96 w-128 p-4 relative max-md:hidden"
+              kind={article.data.color}
+            >
+              <h3 class="text-3xl font-bold font-title text-text lowercase text-center">
+                {article.data.title}
+              </h3>
 
-          const projectName = t(`carousel.${parsedKey}.title`);
-          const projectDescription = t(`carousel.${parsedKey}.description`);
+              <a
+                href={`/${lang}/articles/${article.id.split("/").slice(1).join("/")}`}
+                class="mt-8 text-lg text-text bg-white px-4 py-2 absolute bottom-4 left-4 uppercase font-title tracking-wide border-[5px] border-text"
+              >
+                {t("articles.read")}
+              </a>
+            </Project>
 
-          return (
-            <div class="flex-[0_0_auto] md:w-2/5 relative group">
-              <Image
-                src={image}
-                alt="Project image"
-                class="w-full"
-                width={400}
-                height={300}
-              />
-              <div class="md:absolute md:inset-0 md:h-full md:w-full md:group-hover:bg-black/75 md:group-hover:backdrop-blur-lg transition-all duration-200 grid md:place-items-center md:opacity-0 md:group-hover:opacity-100 p-4">
-                <div class="max-w-sm w-full">
-                  <h3 class="text-white max-md:text-neutral-800 text-2xl">
-                    {projectName}
-                  </h3>
-                  <p class="text-white/80 max-md:text-neutral-700/70">
-                    {projectDescription}
-                  </p>
-
-                  <a href={url}>
-                    <button class="text-white max-md:text-neutral-700 mt-4 hover:underline underline-offset-4">
-                      {t("carousel.button")}
-                    </button>
-                  </a>
-                </div>
-              </div>
-            </div>
-          );
-        })
-      }
-    </section>
-  </div>
-
-  <section class="py-16" id="articles">
-    <header class="max-w-4xl mx-auto w-full max-md:p-4">
-      <h2 class="text-4xl text-neutral-800">
-        {t("articles.title")}
-      </h2>
-
-      <p class="text-lg text-neutral-700/80 max-w-2xl mt-4">
-        {t("articles.description")}
-      </p>
-    </header>
-
-    <div class="grid md:grid-cols-2 gap-8 mt-16">
-      {
-        articles.map((article) => {
-          const { title, description, image } = article.data;
-          const { id } = article;
-
-          const url = `/${lang}/articles/${id.split("/").slice(1).join("/")}`;
-
-          return (
-            <article class="relative group">
-              <Image
-                src={image ?? "/articles/placeholder.png"}
-                alt="Project image"
-                class="w-full"
-                width={400}
-                height={300}
-              />
-
-              <div class="md:absolute md:inset-0 md:h-full md:w-full md:group-hover:bg-black/50 md:group-hover:backdrop-blur-lg transition-all duration-200 grid md:place-items-center md:opacity-0 md:group-hover:opacity-100 p-4">
-                <div class="max-w-md 2xl:max-w-xl w-full">
-                  <h3 class="text-white max-md:text-neutral-800 text-2xl">
-                    {title}
-                  </h3>
-
-                  <p class="text-white/80 max-md:text-neutral-700/70 mt-4">
-                    {description}
-                  </p>
-
-                  <a
-                    href={url}
-                    class="text-white max-md:text-neutral-700 mt-4 inline-block hover:underline underline-offset-4"
-                  >
-                    {t("articles.read")}
-                  </a>
-                </div>
-              </div>
+            <article
+              class={cn(
+                "border-[5px] border-text p-8 md:hidden",
+                firstColor[article.data.color]
+              )}
+            >
+              <h3 class="text-2xl font-bold font-title text-text lowercase">
+                {article.data.title}
+              </h3>
+              <p class="mt-2 text-lg text-text">{article.data.description}</p>
+              <a
+                href={`/${lang}/articles/${article.id.split("/").slice(1).join("/")}`}
+                class="mt-4 inline-block px-6 py-3 bg-text text-white font-semibold hover:bg-opacity-70 transition-colors font-title lowercase tracking-wider"
+              >
+                {t("articles.read")}
+              </a>
             </article>
-          );
-        })
+          </>
+        ))
       }
     </div>
   </section>
