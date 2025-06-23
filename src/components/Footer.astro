@@ -1,6 +1,7 @@
 ---
 import type { Languages } from "#/i18n/ui";
 import { useTranslations } from "#/i18n/utils";
+import Button from "./Button.astro";
 
 interface Props {
   lang: Languages;
@@ -30,95 +31,113 @@ const socialLinks = [
 ];
 ---
 
-<footer class="py-16 mt-16 bg-white max-md:px-4" id="contact">
-  <div class="max-w-4xl mx-auto w-full">
-    <h2 class="text-4xl text-neutral-800">
-      {t("contact.title")}
+<footer
+  class="py-32 max-md:py-16 bg-sundown-300 relative z-10 border-b-[10px] border-text"
+  id="contact"
+>
+  <div class="max-w-6xl mx-auto px-8">
+    <h2
+      class="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-title text-extrusion text-white lowercase"
+    >
+      {t("contact.title.firstPart")}
+      <br />
+      <span
+        class="font-serif text-[3.5rem] md:text-[5rem] lg:text-[6.25rem] xl:text-[7.75rem]"
+      >
+        {t("contact.title.secondPart")}
+      </span>
     </h2>
 
-    <div class="grid md:grid-cols-[1fr_auto] mt-8 gap-16">
-      <form action="/api/mail" method="POST">
-        <div class="grid sm:grid-cols-2 mb-4 gap-4">
-          <div>
-            <label for="name" class="block text-neutral-800">
+    <div class="grid md:grid-cols-3 gap-8">
+      <form class="mt-16 space-y-8 col-span-2" action="/api/mail" method="POST">
+        <div class="grid grid-cols-2 gap-8">
+          <fieldset>
+            <label
+              for="name"
+              class="block text-xl font-semibold text-text font-title lowercase"
+            >
               {t("contact.form.name")}
             </label>
             <input
               type="text"
               id="name"
               name="name"
+              class="mt-2 p-4 w-full border-[5px] border-text bg-white text-text focus:outline-text outline-offset-2 focus:outline-[5px] font-title"
               required
-              class="input mt-1"
             />
-          </div>
-          <div>
-            <label for="email" class="block text-neutral-800">
+          </fieldset>
+          <fieldset>
+            <label
+              for="email"
+              class="block text-xl font-semibold text-text font-title lowercase"
+            >
               {t("contact.form.email")}
             </label>
             <input
               type="email"
               id="email"
               name="email"
+              class="mt-2 p-4 w-full border-[5px] border-text bg-white text-text focus:outline-text outline-offset-2 focus:outline-[5px] font-title"
               required
-              class="input mt-1"
             />
-          </div>
+          </fieldset>
         </div>
-
-        <input type="hidden" name="lang" value={lang} />
-
-        <div class="mb-4">
-          <label for="subject" class="block text-neutral-800">
+        <fieldset>
+          <label
+            for="subject"
+            class="block text-xl font-semibold text-text font-title lowercase"
+          >
             {t("contact.form.subject")}
           </label>
           <input
             type="text"
             id="subject"
             name="subject"
+            class="mt-2 p-4 w-full border-[5px] border-text bg-white text-text focus:outline-text outline-offset-2 focus:outline-[5px] font-title"
             required
-            class="input mt-1"
           />
-        </div>
-
-        <div class="mb-4">
-          <label for="message" class="block text-neutral-800">
+        </fieldset>
+        <fieldset>
+          <label
+            for="message"
+            class="block text-xl font-semibold text-text font-title lowercase"
+          >
             {t("contact.form.message")}
           </label>
           <textarea
+            rows="5"
             id="message"
             name="message"
-            required
-            class="input mt-1"
-            rows="4"></textarea>
-        </div>
-        <button
-          type="submit"
-          class="bg-neutral-800 text-white font-medium py-2 px-4 hover:bg-neutral-700 cursor-pointer"
-        >
+            class="mt-2 p-4 w-full border-[5px] border-text bg-white text-text focus:outline-text outline-offset-2 focus:outline-[5px] font-title"
+            required></textarea>
+        </fieldset>
+
+        <Button kind="white" class="w-max">
           {t("contact.form.send")}
-        </button>
+        </Button>
       </form>
 
-      <article>
-        <h3 class="text-xl text-neutral-800">
+      <div class="mt-16 space-y-8 col-span-1">
+        <h3 class="text-2xl font-semibold text-text font-title lowercase">
           {t("contact.socials")}
         </h3>
-
-        <ul class="space-y-4 mt-4">
+        <ul class="space-y-4">
           {
-            socialLinks.map(({ name, url }) => (
+            socialLinks.map((link) => (
               <li>
                 <a
-                  href={url}
-                  class="text-neutral-700/80 hover:text-neutral-800"
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-xl text-text hover:text-extrusion hover:text-white transition-all duration-150 font-title"
                 >
-                  {name}
+                  {link.name}
                 </a>
               </li>
             ))
           }
         </ul>
-      </article>
+      </div>
     </div>
   </div>
 </footer>

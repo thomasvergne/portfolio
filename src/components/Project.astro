@@ -1,0 +1,93 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cva, type VariantProps } from "cva";
+import { cn } from "./css";
+import { Icon } from "astro-icon/components";
+import { firstColor, secondColor, thirdColor } from "./colors";
+
+export interface Project {
+  title: string;
+  description: string;
+  image: string;
+  url: string;
+  color: keyof typeof firstColor;
+}
+
+const projectStyle = cva({
+  base: "",
+  variants: {
+    kind: firstColor,
+  },
+});
+
+interface Props
+  extends HTMLAttributes<"button">,
+    VariantProps<typeof projectStyle> {
+  project?: Project;
+}
+
+const { project, kind = "black", class: className, ...props } = Astro.props;
+---
+
+<div class="relative group" {...props}>
+  <article
+    class={cn(
+      "relative w-full h-full overflow-hidden border-[5px] border-text flex items-center justify-center",
+      projectStyle({ kind, class: className }),
+      "group-hover:translate-8 transition-transform duration-300 ease-in-out"
+    )}
+  >
+    <slot />
+
+    {
+      project && (
+        <div
+          class={cn(
+            "absolute inset-0 flex flex-col justify-center p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-150",
+            firstColor[kind]
+          )}
+        >
+          <div class="flex-auto">
+            <h2 class="text-3xl font-bold font-title text-text lowercase">
+              {project.title}
+            </h2>
+            <p class="mt-2 text-lg text-text">{project.description}</p>
+          </div>
+          <a
+            href={project.url}
+            class="mt-4 px-6 py-3 pr-3 bg-text text-white font-semibold hover:bg-opacity-70 transition-colors font-title lowercase tracking-wider text-xl flex items-center justify-between group/link overflow-hidden"
+          >
+            access this project
+            <span class="relative group-hover/link:-translate-y-12 transition-all duration-300">
+              <Icon name="tabler:arrow-up-right" class="w-6 h-6" />
+              <Icon
+                name="tabler:arrow-up-right"
+                class="w-6 h-6 absolute -bottom-12"
+              />
+            </span>
+          </a>
+        </div>
+      )
+    }
+  </article>
+
+  <div
+    class={cn(
+      "absolute inset-0 translate-4 -z-10 h-full w-full",
+      secondColor[kind],
+      "group-hover:translate-8 transition-transform duration-300 ease-in-out",
+      "border-[5px] border-text",
+      "max-md:hidden"
+    )}
+  >
+  </div>
+  <div
+    class={cn(
+      "absolute inset-0 translate-8 -z-20 h-full w-full",
+      thirdColor[kind],
+      "border-[5px] border-text",
+      "max-md:hidden"
+    )}
+  >
+  </div>
+</div>

@@ -1,0 +1,49 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cva, type VariantProps } from "cva";
+import { cn } from "./css";
+import { firstColor, secondColor, thirdColor } from "./colors";
+
+const button = cva({
+  base: "",
+  variants: {
+    kind: firstColor,
+  },
+});
+
+interface Props extends HTMLAttributes<"button">, VariantProps<typeof button> {
+  href?: string;
+}
+
+const { kind = "red", class: className, href, ...props } = Astro.props;
+
+const Tag = href ? "a" : "button";
+---
+
+<div class={cn("relative group", className)}>
+  <Tag
+    {href}
+    class={cn(
+      "font-title uppercase tracking-wider py-3 px-12 border-[5px] border-text text-text h-16 flex items-center group-hover:relative text-2xl cursor-pointer",
+      button({ kind })
+    )}
+    {...props}
+  >
+    <slot />
+  </Tag>
+
+  <div
+    class={cn(
+      "w-full h-full absolute -z-10 -bottom-2 -right-2 border-[5px] group-hover:-translate-2 transition-transform duration-300 ease-in-out",
+      secondColor[kind] || secondColor.red
+    )}
+  >
+  </div>
+  <div
+    class={cn(
+      "w-full h-full absolute -z-20 -bottom-4 -right-4 border-[5px] group-hover:-translate-4 transition-transform duration-300 ease-in-out",
+      thirdColor[kind] || thirdColor.red
+    )}
+  >
+  </div>
+</div>
