@@ -1,13 +1,15 @@
 ---
+import Button from "#/components/Button.astro";
+import Footer from "#/components/Footer.astro";
 import Navigation from "#/components/Navigation.astro";
 import { getLangFromUrl, useTranslations } from "#/i18n/utils";
 import Layout from "#/layouts/Layout.astro";
 
 const success = Astro.url.searchParams.get("success");
 const error = Astro.url.searchParams.get("error") as
-	| "missingData"
-	| "invalidEmail"
-	| undefined;
+  | "missingData"
+  | "invalidEmail"
+  | undefined;
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -19,36 +21,46 @@ const t = useTranslations(lang);
   description={success
     ? t("contact.success.description")
     : t("contact.error.description")}
-  class="bg-neutral-100"
+  class="bg-background flex flex-col h-full"
 >
   <Navigation {lang} />
 
-  <div class="max-w-4xl mx-auto w-full py-32 text-center">
-    <h2 class="text-4xl max-w-2xl mx-auto leading-12 text-neutral-700">
-      {success
-        ? t("contact.success.title")
-        : t("contact.error.title")}
+  <div
+    class="max-w-4xl mx-auto w-full py-32 text-center border-x-[10px] border-text flex-auto"
+  >
+    <h2
+      class="text-6xl max-w-2xl mx-auto leading-12 text-white text-extrusion font-title lowercase"
+    >
+      {success ? t("contact.success.title") : t("contact.error.title")}
     </h2>
 
-    <p class="text-lg text-neutral-700/70 text-center italic mt-2">
-      {success
-        ? t("contact.success.description")
-        : t("contact.error.description")}
+    <p class="text-2xl my-16 text-text/70 max-w-2xl mx-auto font-serif">
+      {
+        success
+          ? t("contact.success.description")
+          : t("contact.error.description")
+      }
     </p>
 
-    {error === "missingData" && (
-      <p class="text-lg text-red-500 mt-4">
-        {t("contact.error.missingData.description")}
-      </p>
-    )}
-    {error === "invalidEmail" && (
-      <p class="text-lg text-red-500 mt-4">
-        {t("contact.error.invalidEmail.description")}
-      </p>
-    )}
+    {
+      error === "missingData" && (
+        <p class="text-2xl my-16 text-sundown-500 max-w-2xl mx-auto font-serif">
+          {t("contact.error.missingData.description")}
+        </p>
+      )
+    }
+    {
+      error === "invalidEmail" && (
+        <p class="text-2xl my-16 text-sundown-500 max-w-2xl mx-auto font-serif">
+          {t("contact.error.invalidEmail.description")}
+        </p>
+      )
+    }
 
-    <a href={`/${lang}/`} class="text-lg mt-8 inline-block hover:underline underline-offset-4 text-neutral-800">
-      {t('contact.back')}
-    </a>
+    <Button href={`/${lang}/#contact`} kind="white" class="mt-8 w-max mx-auto">
+      {t("contact.back")}
+    </Button>
   </div>
+
+  <Footer {lang} class="border-t-[10px] border-text" />
 </Layout>

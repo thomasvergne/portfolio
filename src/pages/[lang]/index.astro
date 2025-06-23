@@ -176,7 +176,7 @@ const articles = (await getCollection("blog"))
     <Marquee gap={64} class="mt-32 max-md:hidden" speed={100}>
       {
         images.map((image) => (
-          <Project project={image} kind={image.color}>
+          <Project project={image} kind={image.color} {lang}>
             <Image
               src={image.image}
               alt={image.description}
@@ -189,7 +189,7 @@ const articles = (await getCollection("blog"))
       }
       {
         images.map((image) => (
-          <Project project={image} id="first-hidden-item" kind={image.color}>
+          <Project project={image} id="first-hidden-item" kind={image.color} {lang}>
             <Image
               src={image.image}
               alt={image.description}
@@ -260,6 +260,7 @@ const articles = (await getCollection("blog"))
         articles.map((article) => (
           <>
             <Project
+              {lang}
               class="h-96 w-128 p-4 relative max-md:hidden"
               kind={article.data.color}
             >

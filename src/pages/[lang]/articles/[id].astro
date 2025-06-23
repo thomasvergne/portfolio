@@ -59,37 +59,7 @@ const links = [
   image={post.data.image}
   class="bg-background"
 >
-  <div class="border-b-[10px] border-text">
-    <nav
-      class="py-2 pt-8 px-4 max-w-4xl md:border-x-[10px] border-text mx-auto flex flex-row justify-between items-center"
-    >
-      <a href="/" class="mx-auto">
-        <img
-          src="/picture.svg"
-          alt="Picture logo"
-          class="h-16 w-auto"
-        />
-      </a>
-    </nav>
-
-    <div class="mx-auto">
-      <div
-        class="px-4 py-8 md:border-x-[10px] max-w-4xl mx-auto flex items-center justify-center gap-x-8"
-      >
-        {
-          links.map(({ name, url }) => (
-            <a
-              href={url}
-              class="text-text font-title lowercase text-xl hover:text-extrusion hover:text-white transition-all duration-200"
-            >
-              {t(`navbar.links.${name}`)}
-            </a>
-          ))
-        }
-      </div>
-    </div>
-  </div>
-
+  <Navigation {lang} />
   <div
     class="grid sm:grid-cols-4 gap-8 max-w-4xl mx-auto md:border-x-[10px] border-text"
   >
