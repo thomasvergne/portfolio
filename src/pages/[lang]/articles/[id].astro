@@ -11,6 +11,8 @@ import type { Languages } from "#/i18n/ui";
 import Layout from "#/layouts/Layout.astro";
 import { useTranslations } from "#/i18n/utils";
 import Footer from "#/components/Footer.astro";
+import { cn } from "#/components/css";
+import { firstColor } from "#/components/colors";
 
 export async function getStaticPaths() {
   const posts = (await getCollection("blog")).filter(
@@ -33,6 +35,21 @@ const { Content, headings } = await render(post);
 const tree = buildTree(headings);
 
 const t = useTranslations(lang);
+
+const links = [
+  {
+    name: "projects",
+    url: `/${lang}#projects`,
+  },
+  {
+    name: "blog",
+    url: `/${lang}#articles`,
+  },
+  {
+    name: "contact",
+    url: `/${lang}#contact`,
+  },
+] as const;
 ---
 
 <Layout
@@ -40,48 +57,84 @@ const t = useTranslations(lang);
   lang={post.id.split("/")[0]}
   description={post.data.description}
   image={post.data.image}
-  class="bg-neutral-100"
+  class="bg-background"
 >
-  <Navigation lang={lang as Languages} />
+  <div class="border-b-[10px] border-text">
+    <nav
+      class="py-2 pt-8 px-4 max-w-4xl md:border-x-[10px] border-text mx-auto flex flex-row justify-between items-center"
+    >
+      <a href="/" class="mx-auto">
+        <img
+          src="/picture.svg"
+          alt="Picture logo"
+          class="h-16 w-auto"
+        />
+      </a>
+    </nav>
 
-  <div class="grid sm:grid-cols-4 gap-8 py-8 max-w-4xl max-md:p-4 mx-auto">
-    <Image
-      src={post.data.image ?? "/articles/placeholder.png"}
-      alt={post.data.title}
-      width={800}
-      height={400}
-      class="w-full h-auto sm:col-span-4 object-cover"
-    />
+    <div class="mx-auto">
+      <div
+        class="px-4 py-8 md:border-x-[10px] max-w-4xl mx-auto flex items-center justify-center gap-x-8"
+      >
+        {
+          links.map(({ name, url }) => (
+            <a
+              href={url}
+              class="text-text font-title lowercase text-xl hover:text-extrusion hover:text-white transition-all duration-200"
+            >
+              {t(`navbar.links.${name}`)}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="grid sm:grid-cols-4 gap-8 max-w-4xl mx-auto md:border-x-[10px] border-text"
+  >
+    <article
+      class={cn(
+        "w-full h-auto sm:col-span-4 border-b-[10px] max-sm:border-y-[10px] border-text py-8",
+        firstColor[post.data.color]
+      )}
+    >
+      <div class="px-8">
+        <h1 class="text-4xl font-bold font-title text-text lowercase">
+          {post.data.title}
+        </h1>
+
+        <p class="font-serif tracking-wide mt-4 text-2xl">
+          {post.data.description}
+        </p>
+      </div>
+    </article>
 
     <div
       class="sm:col-span-3 max-w-full overflow-x-auto"
       class:list={{ "sm:!col-span-4": tree.length === 0 }}
     >
-      <h2 class="text-2xl font-semibold text-neutral-800">
-        {post.data.title}
-      </h2>
-
-      <p class="text-lg text-neutral-700/70 text-justify italic mt-2">
-        {post.data.description}
-      </p>
-      <div class="article prose mt-8">
+      <div class="article prose px-8">
         <Content />
       </div>
     </div>
 
     <nav
-      class="sm:sticky top-4 self-start max-sm:order-first"
+      class="sm:sticky top-4 self-start max-md:px-8 max-md:pt-8 max-sm:order-first"
       id="article-toc"
       class:list={{
         hidden: tree.length === 0,
       }}
     >
-      <span class="text text-neutral-800 font-semibold">
+      <span class="text text-text font-semibold font-title lowercase">
         {t("toc")}
       </span>
       <Tree class="mt-2" headings={tree} rawHeadings={headings} />
     </nav>
   </div>
+
+  <div class="border-b-[10px] border-text"></div>
+
   <Footer {lang} />
 </Layout>
 
