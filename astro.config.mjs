@@ -10,8 +10,6 @@ import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 import theme from "shiki/themes/github-dark.mjs";
 
-import cloudflare from "@astrojs/cloudflare";
-
 // https://astro.build/config
 export default defineConfig({
   markdown: {
