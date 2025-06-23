@@ -15,7 +15,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const {
     title,
     description,
-    image = "/background.svg",
+    image = "/background.webp",
     lang = defaultLang,
     ...props
 } = Astro.props;
@@ -67,9 +67,12 @@ const {
         <script src="#/components/scrollable.ts"></script>
 
         <script>
-          import locomotiveScroll from "locomotive-scroll";
-          
-          document.addEventListener('DOMContentLoaded', () => new locomotiveScroll());
+            import locomotiveScroll from "locomotive-scroll";
+
+            document.addEventListener(
+                "DOMContentLoaded",
+                () => new locomotiveScroll(),
+            );
         </script>
 
         <slot name="head" />
