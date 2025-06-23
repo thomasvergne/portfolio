@@ -109,7 +109,7 @@ export const ui = {
     projects: {
       title: {
         firstPart: "certains des projets",
-        secondPart: "auxquels j'ai participés",
+        secondPart: "auxquels j'ai participé",
       },
 
       list: {
