@@ -127,14 +127,16 @@ const articles = (await getCollection("blog"))
                 >
             </h1>
 
-            <Button
-                class="mt-12 mx-auto max-sm:w-full w-max"
-                kind="peach-orange"
-                data-scroll-to
-                href="#contact"
-            >
-                {t("header.cta")}
-            </Button>
+            <div class="mt-12 mx-auto pr-4 w-full">
+                <Button
+                    class="max-sm:w-full w-max"
+                    kind="peach-orange"
+                    data-scroll-to
+                    href="#contact"
+                >
+                    {t("header.cta")}
+                </Button>
+            </div>
         </div>
 
         <Marquee
@@ -163,7 +165,7 @@ const articles = (await getCollection("blog"))
         class="py-8 sm:py-32 sm:pb-0 bg-peach-orange-300 border-b-[10px] border-text"
     >
         <h2
-            class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-title text-extrusion text-white max-md:leading-16 px-16"
+            class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-title text-extrusion text-white max-md:leading-16 md:px-16 max-md:text-center"
         >
             {t("projects.title.firstPart")}
             <br />
@@ -174,7 +176,7 @@ const articles = (await getCollection("blog"))
             </span>
         </h2>
 
-        <div class="flex flex-col mt-16">
+        <div class="flex flex-col mt-16 max-md:hidden">
             {
                 images.map((project) => (
                     <article class="px-16 py-12 hover:bg-peach-orange-900/10 transition-all duration-150 group relative flex flex-row justify-between">
@@ -220,41 +222,6 @@ const articles = (await getCollection("blog"))
                 ))
             }
         </div>
-
-        <!--<Marquee gap={64} class="mt-32 max-md:hidden" speed={100}>
-            {
-                images.map((image) => (
-                    <Project project={image} kind={image.color} {lang}>
-                        <Image
-                            src={image.image}
-                            alt={image.description}
-                            width={400}
-                            height={300}
-                            class="h-full object-cover"
-                        />
-                    </Project>
-                ))
-            }
-            {
-                images.map((image) => (
-                    <Project
-                        project={image}
-                        id="first-hidden-item"
-                        kind={image.color}
-                        {lang}
-                    >
-                        <Image
-                            src={image.image}
-                            alt={image.description}
-                            width={400}
-                            height={300}
-                            class="h-full object-cover"
-                        />
-                    </Project>
-                ))
-            }
-        </Marquee> -->
-
         <div class="md:hidden z-20 grid px-4 gap-4 mt-16">
             {
                 images.map((image) => (
