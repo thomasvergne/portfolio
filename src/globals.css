@@ -97,7 +97,6 @@
         -1px 1px var(--color-text),
         1px -1px var(--color-text),
         1px 1px var(--color-text);
-    paint-order: stroke fill;
 }
 
 @layer components {
