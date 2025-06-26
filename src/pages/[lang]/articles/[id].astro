@@ -15,17 +15,17 @@ import { cn } from "#/components/css";
 import { firstColor } from "#/components/colors";
 
 export async function getStaticPaths() {
-  const posts = (await getCollection("blog")).filter(
-    (x) => !x.id.startsWith("_")
-  );
+    const posts = (await getCollection("blog")).filter(
+        (x) => !x.id.startsWith("_"),
+    );
 
-  return posts.map((post) => ({
-    params: {
-      id: post.id.split("/").slice(1).join("/"),
-      lang: post.id.split("/")[0] as Languages,
-    },
-    props: { post },
-  }));
+    return posts.map((post) => ({
+        params: {
+            id: post.id.split("/").slice(1).join("/"),
+            lang: post.id.split("/")[0] as Languages,
+        },
+        props: { post },
+    }));
 }
 
 const { post } = Astro.props;
@@ -37,105 +37,106 @@ const tree = buildTree(headings);
 const t = useTranslations(lang);
 
 const links = [
-  {
-    name: "projects",
-    url: `/${lang}#projects`,
-  },
-  {
-    name: "blog",
-    url: `/${lang}#articles`,
-  },
-  {
-    name: "contact",
-    url: `/${lang}#contact`,
-  },
+    {
+        name: "projects",
+        url: `/${lang}#projects`,
+    },
+    {
+        name: "blog",
+        url: `/${lang}#articles`,
+    },
+    {
+        name: "contact",
+        url: `/${lang}#contact`,
+    },
 ] as const;
 ---
 
 <Layout
-  title={post.data.title}
-  lang={post.id.split("/")[0]}
-  description={post.data.description}
-  image={post.data.image}
-  class="bg-background"
+    title={post.data.title}
+    lang={post.id.split("/")[0]}
+    description={post.data.description}
+    image={post.data.image}
+    class="bg-background"
 >
-  <Navigation {lang} />
-  <div
-    class="grid sm:grid-cols-4 gap-8 max-w-4xl mx-auto md:border-x-[10px] border-text"
-  >
-    <article
-      class={cn(
-        "w-full h-auto sm:col-span-4 border-b-[10px] max-sm:border-y-[10px] border-text py-8",
-        firstColor[post.data.color]
-      )}
-    >
-      <div class="px-8">
-        <h1 class="text-4xl font-bold font-title text-text lowercase">
-          {post.data.title}
-        </h1>
-
-        <p class="font-serif tracking-wide mt-4 text-2xl">
-          {post.data.description}
-        </p>
-      </div>
-    </article>
-
+    <Navigation {lang} />
     <div
-      class="sm:col-span-3 max-w-full overflow-x-auto"
-      class:list={{ "sm:!col-span-4": tree.length === 0 }}
+        class="grid sm:grid-cols-4 gap-8 max-w-4xl mx-auto md:border-x-[10px] border-text"
     >
-      <div class="article prose px-8">
-        <Content />
-      </div>
+        <article
+            class={cn(
+                "w-full h-auto sm:col-span-4 border-b-[10px] max-sm:border-y-[10px] border-text py-8",
+                firstColor[post.data.color],
+            )}
+        >
+            <div class="px-8">
+                <h1 class="text-4xl font-bold font-title text-text lowercase">
+                    {post.data.title}
+                </h1>
+
+                <p class="font-serif tracking-wide mt-4 text-2xl">
+                    {post.data.description}
+                </p>
+            </div>
+        </article>
+
+        <div
+            class="sm:col-span-3 max-w-full overflow-x-auto"
+            class:list={{ "sm:!col-span-4": tree.length === 0 }}
+        >
+            <div class="article prose px-4 sm:px-8">
+                <Content />
+            </div>
+        </div>
+
+        <nav
+            class="sm:sticky top-4 self-start max-md:px-8 max-md:pt-8 max-sm:order-first"
+            id="article-toc"
+            class:list={{
+                hidden: tree.length === 0,
+            }}
+        >
+            <span class="text text-text font-semibold font-title lowercase">
+                {t("toc")}
+            </span>
+            <Tree class="mt-2" headings={tree} rawHeadings={headings} />
+        </nav>
     </div>
 
-    <nav
-      class="sm:sticky top-4 self-start max-md:px-8 max-md:pt-8 max-sm:order-first"
-      id="article-toc"
-      class:list={{
-        hidden: tree.length === 0,
-      }}
-    >
-      <span class="text text-text font-semibold font-title lowercase">
-        {t("toc")}
-      </span>
-      <Tree class="mt-2" headings={tree} rawHeadings={headings} />
-    </nav>
-  </div>
+    <div class="border-b-[10px] border-text"></div>
 
-  <div class="border-b-[10px] border-text"></div>
-
-  <Footer {lang} />
+    <Footer {lang} />
 </Layout>
 
 <script>
-  function addIntersectionObserver() {
-    const observer = new IntersectionObserver((sections) => {
-      sections.forEach((section) => {
-        const heading = section.target.querySelector("h1, h2, h3, h4, h5");
-        if (!heading) return;
-        const id = heading.getAttribute("id");
+    function addIntersectionObserver() {
+        const observer = new IntersectionObserver((sections) => {
+            sections.forEach((section) => {
+                const heading =
+                    section.target.querySelector("h1, h2, h3, h4, h5");
+                if (!heading) return;
+                const id = heading.getAttribute("id");
 
-        // Get the link to this section's heading
-        const link = document.querySelector<HTMLAnchorElement>(
-          `nav#article-toc a[href="#${id}"]`
-        );
-        if (!link) return;
+                // Get the link to this section's heading
+                const link = document.querySelector<HTMLAnchorElement>(
+                    `nav#article-toc a[href="#${id}"]`,
+                );
+                if (!link) return;
 
-        // Add/remove the .active class based on whether the
-        // section is visible
-        if (section.intersectionRatio > 0) {
-          link.dataset.active = "true";
-        } else {
-          delete link.dataset.active;
-        }
-      });
-    });
+                // Add/remove the .active class based on whether the
+                // section is visible
+                if (section.intersectionRatio > 0) {
+                    link.dataset.active = "true";
+                } else {
+                    delete link.dataset.active;
+                }
+            });
+        });
 
-    document
-      .querySelectorAll(".article section")
-      .forEach((section) => observer.observe(section));
-  }
+        document
+            .querySelectorAll(".article section")
+            .forEach((section) => observer.observe(section));
+    }
 
-  addIntersectionObserver();
+    addIntersectionObserver();
 </script>
