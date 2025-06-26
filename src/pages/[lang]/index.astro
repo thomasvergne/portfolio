@@ -17,7 +17,8 @@ import {
 } from "#/components/Project.astro";
 import Footer from "#/components/Footer.astro";
 import { cn } from "#/components/css";
-import { firstColor } from "#/components/colors";
+import { firstColor, secondColor, thirdColor } from "#/components/colors";
+import { Icon } from "astro-icon/components";
 
 export const getStaticPaths = (() => {
     const languages = Object.keys(ui) as Languages[];
@@ -159,10 +160,10 @@ const articles = (await getCollection("blog"))
     </header>
 
     <section
-        class="py-8 sm:py-32 bg-peach-orange-300 border-b-[10px] border-text overflow-x-hidden"
+        class="py-8 sm:py-32 sm:pb-0 bg-peach-orange-300 border-b-[10px] border-text"
     >
         <h2
-            class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-title text-center text-extrusion text-white max-md:leading-16"
+            class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-title text-extrusion text-white max-md:leading-16 px-16"
         >
             {t("projects.title.firstPart")}
             <br />
@@ -173,7 +174,54 @@ const articles = (await getCollection("blog"))
             </span>
         </h2>
 
-        <Marquee gap={64} class="mt-32 max-md:hidden" speed={100}>
+        <div class="flex flex-col mt-16">
+            {
+                images.map((project) => (
+                    <article class="px-16 py-12 hover:bg-peach-orange-900/10 transition-all duration-150 group relative flex flex-row justify-between">
+                        <div>
+                            <h3 class="font-serif italic font-bold text-5xl lowercase text-peach-orange-950">
+                                {project.title}
+                            </h3>
+
+                            <p class="mt-4 text-peach-orange-950 font-serif text-2xl">
+                                {project.description}
+                            </p>
+                        </div>
+
+                        <span>
+                            <Icon
+                                is:raw
+                                stroke-width={1}
+                                name="tabler:arrow-up-right"
+                                class="text-peach-orange-950 size-16 transition-all duration-300 opacity-100 group-hover:opacity-0 **:stroke-1"
+                            />
+                        </span>
+
+                        <div class="group-hover:rotate-12 group-hover:opacity-100 opacity-0 -top-16 transition-all duration-300 delay-75 absolute right-16 z-50">
+                            <Image
+                                src={project.image}
+                                alt={project.description}
+                                width={800}
+                                height={600}
+                                class="size-64 object-cover border-[5px] border-text"
+                            />
+
+                            <div
+                                class="absolute top-0 left-0 group-hover:top-4 group-hover:left-4 size-64 border-[5px] border-text delay-200 transition-all duration-150 -z-10"
+                                class:list={secondColor[project.color]}
+                            />
+
+                            <div
+                                class="absolute top-0 left-0 group-hover:top-8 group-hover:left-8 size-64 border-[5px] border-text delay-200 transition-all duration-150 -z-20"
+                                class:list={thirdColor[project.color]}
+                            />
+                        </div>
+                    </article>
+                ))
+            }
+        </div>
+
+        <!--<Marquee gap={64} class="mt-32 max-md:hidden" speed={100}>
             {
                 images.map((image) => (
                     <Project project={image} kind={image.color} {lang}>
@@ -205,7 +253,7 @@ const articles = (await getCollection("blog"))
                     </Project>
                 ))
             }
-        </Marquee>
+        </Marquee> -->
 
         <div class="md:hidden z-20 grid px-4 gap-4 mt-16">
             {
