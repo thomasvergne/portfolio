@@ -36,38 +36,33 @@ const t = useTranslations(lang);
 const images = [
     {
         title: "Le Don vert",
-        description:
-            "Un site de don de plantes entre particuliers dans toute la France.",
+        description: t("projects.list.ledonvert"),
         image: "/carousel/ledonvert.webp",
         url: "https://ledonvert.org",
         color: "green",
     },
     {
         title: "LcA",
-        description: "Site pour une couturère geek, éthique et écoresponsable.",
+        description: t("projects.list.lca"),
         image: "/carousel/lca.webp",
         url: "https://lca-couture.fr",
         color: "sundown",
     },
     {
         title: "Numa",
-        description:
-            "Un site de gestion des émotions sous la forme d'agenda intelligent.",
+        description: t("projects.list.numa"),
         image: "/carousel/numa.webp",
         url: "https://numa-app.fr",
         color: "white",
     },
     {
         title: "Dutoit Automobile",
-        description:
-            "Un site pour un garage automobile spécialisé dans les 4x4.",
+        description: t("projects.list.dutoitautomobile"),
         image: "/carousel/dutoitautomobile.webp",
         url: "https://dutoitautomobile.fr",
         color: "sundown",
     },
 ] satisfies ProjectType[];
-
-// type ImageKey = keyof typeof images;
 
 const articles = (await getCollection("blog"))
     .filter(({ id }) => !id.startsWith("_") && id.startsWith(lang))
