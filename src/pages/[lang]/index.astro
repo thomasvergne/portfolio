@@ -43,14 +43,14 @@ const images = [
         color: "green",
     },
     {
-        title: "LCA",
+        title: "LcA",
         description: "Site pour une couturère geek, éthique et écoresponsable.",
         image: "/carousel/lca.webp",
         url: "https://lca-couture.fr",
         color: "sundown",
     },
     {
-        title: "NUMA",
+        title: "Numa",
         description:
             "Un site de gestion des émotions sous la forme d'agenda intelligent.",
         image: "/carousel/numa.webp",
@@ -122,7 +122,7 @@ const articles = (await getCollection("blog"))
                 </span>
                 <br />
                 <span
-                    class="font-serif lowercase text-[5rem] md:text-[6.25rem] lg:text-[7.75rem] xl:text-[9.75rem]"
+                    class="font-serif text-[5rem] md:text-[6.25rem] lg:text-[7.75rem] xl:text-[9.75rem]"
                     >{t("header.secondPart")}</span
                 >
             </h1>
@@ -181,7 +181,7 @@ const articles = (await getCollection("blog"))
                 images.map((project) => (
                     <article class="px-16 py-12 hover:bg-peach-orange-900/10 transition-all duration-150 group relative flex flex-row justify-between">
                         <div>
-                            <h3 class="font-serif italic font-bold text-5xl lowercase text-peach-orange-950">
+                            <h3 class="font-serif italic font-bold text-5xl text-peach-orange-950">
                                 {project.title}
                             </h3>
 

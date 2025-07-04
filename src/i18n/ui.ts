@@ -125,7 +125,7 @@ export const ui = {
     articles: {
       title: {
         firstPart: "j'écris aussi des articles",
-        secondPart: "à propos de tout"
+        secondPart: "à propos de tout",
       },
       description:
         "Une sélection d'articles que j'ai écrits sur les langages de programmation, illustrés par des exemples de code.",
@@ -179,8 +179,8 @@ export const ui = {
 } as const;
 
 export const languagesNames: Record<Languages, [string, string]> = {
-	en: ["🇺🇸", "English"],
-	fr: ["🇫🇷", "Français"],
+  en: ["🇺🇸", "English"],
+  fr: ["🇫🇷", "Français"],
 };
 
 export type Languages = keyof typeof ui;
