@@ -33,9 +33,11 @@ interface Sentences {
 	[key: string]: string | Sentences;
 }
 
-export function useTranslations(lang: Languages) {
+export type Keys = FlattenedTranslations<(typeof ui)[keyof typeof ui]>;
+
+export function fetchTranslations(lang: Languages) {
 	return function t(
-		key: FlattenedTranslations<(typeof ui)[keyof typeof ui]>,
+		key: Keys,
 	): string {
 		const keys = key.split(".") as SplittedTranslations<typeof key>;
 
