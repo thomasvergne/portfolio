@@ -4,7 +4,7 @@ description: A step-by-step guide to implementing type inference from scratch in
 date: 2021-07-01
 author: Thomas Vergne
 image: /articles/typechecker.webp
-color: peach-orange
+color: white
 ---
 
 ## Introduction
