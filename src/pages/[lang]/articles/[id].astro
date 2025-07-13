@@ -4,13 +4,13 @@ export const prerender = true;
 import { Image } from "astro:assets";
 import { render } from "astro:content";
 import { getCollection } from "astro:content";
-import Navigation from "#/components/Navigation.astro";
-import Tree from "#/components/Tree.astro";
-import { buildTree } from "#/components/tree";
+import Navigation from "#/components/astro/Navigation.astro";
+import Tree from "#/components/astro/Tree.astro";
+import { buildTree } from "#/components/scripts/tree";
 import type { Languages } from "#/i18n/ui";
 import Layout from "#/layouts/Layout.astro";
-import { useTranslations } from "#/i18n/utils";
-import Footer from "#/components/Footer.astro";
+import { fetchTranslations } from "#/i18n/utils";
+import Footer from "#/components/astro/Footer.astro";
 import { cn } from "#/components/css";
 import { firstColor } from "#/components/colors";
 
@@ -34,7 +34,7 @@ const { Content, headings } = await render(post);
 
 const tree = buildTree(headings);
 
-const t = useTranslations(lang);
+const t = fetchTranslations(lang);
 
 const links = [
     {

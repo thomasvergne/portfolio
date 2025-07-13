@@ -4,322 +4,319 @@ export const prerender = true;
 import { Image } from "astro:assets";
 import type { GetStaticPaths } from "astro";
 import { type Languages, ui } from "#/i18n/ui";
-import { useTranslations } from "#/i18n/utils";
+import { fetchTranslations } from "#/i18n/utils";
 import Layout from "#/layouts/Layout.astro";
 import "#/no-swipe.css";
 import { getCollection } from "astro:content";
-import Marquee from "#/components/Marquee.astro";
-import Button from "#/components/Button.astro";
+import Marquee from "#/components/astro/Marquee.astro";
+import Button from "#/components/astro/Button.astro";
 import circles from "/illustrations/circles.svg?raw";
 import {
-    type Project as ProjectType,
-    default as Project,
-} from "#/components/Project.astro";
-import Footer from "#/components/Footer.astro";
+  type Project as ProjectType,
+  default as Project,
+} from "#/components/astro/Project.astro";
+import Footer from "#/components/astro/Footer.astro";
 import { cn } from "#/components/css";
 import { firstColor, secondColor, thirdColor } from "#/components/colors";
 import { Icon } from "astro-icon/components";
+import PriceManager from "#/components/react/price-manager";
 
 export const getStaticPaths = (() => {
-    const languages = Object.keys(ui) as Languages[];
+  const languages = Object.keys(ui) as Languages[];
 
-    const paths = languages.map((lang) => ({
-        params: { lang },
-        props: { lang },
-    }));
-    return paths;
+  const paths = languages.map((lang) => ({
+    params: { lang },
+    props: { lang },
+  }));
+  return paths;
 }) satisfies GetStaticPaths;
 
 const { lang } = Astro.props;
-const t = useTranslations(lang);
+const t = fetchTranslations(lang);
 
 const images = [
-    {
-        title: "Le Don vert",
-        description: t("projects.list.ledonvert"),
-        image: "/carousel/ledonvert.webp",
-        url: "https://ledonvert.org",
-        color: "green",
-    },
-    {
-        title: "LcA",
-        description: t("projects.list.lca"),
-        image: "/carousel/lca.webp",
-        url: "https://lca-couture.fr",
-        color: "sundown",
-    },
-    {
-        title: "Numa",
-        description: t("projects.list.numa"),
-        image: "/carousel/numa.webp",
-        url: "https://numa-app.fr",
-        color: "white",
-    },
-    {
-        title: "Dutoit Automobile",
-        description: t("projects.list.dutoitautomobile"),
-        image: "/carousel/dutoitautomobile.webp",
-        url: "https://dutoitautomobile.fr",
-        color: "sundown",
-    },
+  {
+    title: "Le Don vert",
+    description: t("projects.list.ledonvert"),
+    image: "/carousel/ledonvert.webp",
+    url: "https://ledonvert.org",
+    color: "green",
+  },
+  {
+    title: "LcA",
+    description: t("projects.list.lca"),
+    image: "/carousel/lca.webp",
+    url: "https://lca-couture.fr",
+    color: "sundown",
+  },
+  {
+    title: "Numa",
+    description: t("projects.list.numa"),
+    image: "/carousel/numa.webp",
+    url: "https://numa-app.fr",
+    color: "white",
+  },
+  {
+    title: "Dutoit Automobile",
+    description: t("projects.list.dutoitautomobile"),
+    image: "/carousel/dutoitautomobile.webp",
+    url: "https://dutoitautomobile.fr",
+    color: "sundown",
+  },
 ] satisfies ProjectType[];
 
 const articles = (await getCollection("blog"))
-    .filter(({ id }) => !id.startsWith("_") && id.startsWith(lang))
-    .sort((a, b) => {
-        const aDate = new Date(a.data.date);
-        const bDate = new Date(b.data.date);
+  .filter(({ id }) => !id.startsWith("_") && id.startsWith(lang))
+  .sort((a, b) => {
+    const aDate = new Date(a.data.date);
+    const bDate = new Date(b.data.date);
 
-        return bDate.getTime() - aDate.getTime();
-    });
+    return bDate.getTime() - aDate.getTime();
+  });
 ---
 
 <Layout
-    title="Thomas Vergne"
-    description="Spécialiste du développement d’applications éco-conçues, je crée des solutions numériques durables en intégrant les principes de sobriété numérique et les standards environnementaux. "
-    class="bg-text"
+  title="Thomas Vergne"
+  description="Spécialiste du développement d’applications éco-conçues, je crée des solutions numériques durables en intégrant les principes de sobriété numérique et les standards environnementaux. "
+  class="bg-text"
 >
-    <header
-        class="relative overflow-hidden min-h-[750px] h-screen flex flex-col bg-background z-10"
+  <header
+    class="relative overflow-hidden min-h-[750px] h-screen flex flex-col bg-background z-10"
+  >
+    <Marquee
+      speed={100}
+      class="bg-sundown-300 inline-flex items-center py-4 border-y-[10px] border-text"
+      should-not-stop-on-hover
     >
-        <Marquee
-            speed={100}
-            class="bg-sundown-300 inline-flex items-center py-4 border-y-[10px] border-text"
-            should-not-stop-on-hover
-        >
-            {
-                Array.from({ length: 10 }).map((_, i) => (
-                    <>
-                        <span
-                            class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black font-title uppercase italic text-text"
-                            id={i > 5 ? "first-hidden-item" : ""}
-                        >
-                            {t("header.marquee")}
-                        </span>
-                        <span class="ml-2">&#x25cf;</span>
-                    </>
-                ))
-            }
-        </Marquee>
-
-        <div
-            class="absolute bottom-0 right-0 -z-40 translate-y-[55%] translate-x-[55%]"
-        >
-            <Fragment set:html={circles} />
-        </div>
-
-        <div class="relative flex-auto flex flex-col justify-center px-4">
-            <h1
-                class="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black font-title text-center relative text-extrusion text-white"
-            >
-                <span class="relative">
-                    {t("header.firstPart")}
-                </span>
-                <br />
-                <span
-                    class="font-serif text-[5rem] md:text-[6.25rem] lg:text-[7.75rem] xl:text-[9.75rem]"
-                    >{t("header.secondPart")}</span
-                >
-            </h1>
-
-            <div class="mt-12 mx-auto pr-4 w-full">
-                <Button
-                    class="max-sm:w-full w-max mx-auto"
-                    kind="peach-orange"
-                    data-scroll-to
-                    href="#contact"
-                >
-                    {t("header.cta")}
-                </Button>
-            </div>
-        </div>
-
-        <Marquee
-            speed={100}
-            direction="reverse"
-            class="bg-green-300 inline-flex items-center py-4 border-y-[10px] border-text"
-            should-not-stop-on-hover
-        >
-            {
-                Array.from({ length: 10 }).map((_, i) => (
-                    <>
-                        <span
-                            class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black font-title uppercase italic text-text"
-                            id={i > 5 ? "first-hidden-item" : ""}
-                        >
-                            {t("header.marquee")}
-                        </span>
-                        <span class="ml-2">&#x25cf;</span>
-                    </>
-                ))
-            }
-        </Marquee>
-    </header>
-
-    <section
-        class="py-8 sm:py-32 sm:pb-0 bg-peach-orange-300 border-b-[10px] border-text"
-    >
-        <h2
-            class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-title text-extrusion text-white max-md:leading-16 md:px-16 max-md:text-center"
-        >
-            {t("projects.title.firstPart")}
-            <br />
+      {
+        Array.from({ length: 30 }).map((_, i) => (
+          <>
             <span
-                class="font-serif text-[2.75rem] sm:text-[3.5rem] md:text-[5rem] lg:text-[6.25rem] xl:text-[7.75rem]"
+              class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black font-title uppercase italic text-text"
+              id={i > 5 ? "first-hidden-item" : ""}
             >
-                {t("projects.title.secondPart")}
+              {t("header.marquee")}
             </span>
-        </h2>
+            <span class="ml-2">&#x25cf;</span>
+          </>
+        ))
+      }
+    </Marquee>
 
-        <div class="flex flex-col mt-16 max-md:hidden">
-            {
-                images.map((project) => (
-                    <a
-                        href={project.url}
-                        class="px-16 py-12 hover:bg-peach-orange-900/10 transition-all duration-150 group relative flex flex-row justify-between"
-                    >
-                        <div>
-                            <h3 class="font-serif italic font-bold text-5xl text-peach-orange-950">
-                                {project.title}
-                            </h3>
-
-                            <p class="mt-4 text-peach-orange-950 font-serif text-2xl">
-                                {project.description}
-                            </p>
-                        </div>
-
-                        <span>
-                            <Icon
-                                is:raw
-                                stroke-width={1}
-                                name="tabler:arrow-up-right"
-                                class="text-peach-orange-950 size-16 transition-all duration-300 opacity-100 group-hover:opacity-0 **:stroke-1"
-                            />
-                        </span>
-
-                        <div class="group-hover:rotate-12 group-hover:opacity-100 opacity-0 -top-16 transition-all duration-300 delay-75 absolute right-16 z-50">
-                            <Image
-                                src={project.image}
-                                alt={project.description}
-                                width={800}
-                                height={600}
-                                class="size-64 object-cover border-[5px] border-text"
-                            />
-
-                            <div
-                                class="absolute top-0 left-0 group-hover:top-4 group-hover:left-4 size-64 border-[5px] border-text delay-200 transition-all duration-150 -z-10"
-                                class:list={secondColor[project.color]}
-                            />
-
-                            <div
-                                class="absolute top-0 left-0 group-hover:top-8 group-hover:left-8 size-64 border-[5px] border-text delay-200 transition-all duration-150 -z-20"
-                                class:list={thirdColor[project.color]}
-                            />
-                        </div>
-                    </a>
-                ))
-            }
-        </div>
-        <div class="md:hidden z-20 grid px-4 gap-4 mt-16">
-            {
-                images.map((image) => (
-                    <article class="border-[5px] border-text">
-                        <Image
-                            src={image.image}
-                            alt={image.description}
-                            width={400}
-                            height={300}
-                            class="h-96 w-full object-cover border-b-[5px] border-text"
-                        />
-
-                        <div class={cn("p-4", firstColor[image.color])}>
-                            <h3 class="text-2xl font-bold font-title text-text lowercase">
-                                {image.title}
-                            </h3>
-                            <p class="mt-2 text-lg text-text">
-                                {image.description}
-                            </p>
-                            <a
-                                href={image.url}
-                                class="mt-4 inline-block px-6 py-3 bg-text text-white font-semibold hover:bg-opacity-70 transition-colors font-title lowercase tracking-wider w-full text-center"
-                            >
-                                {t("projects.cta")}
-                            </a>
-                        </div>
-                    </article>
-                ))
-            }
-        </div>
-    </section>
-
-    <section
-        id="articles"
-        class="py-8 sm:py-32 px-4 bg-background relative z-10 overflow-hidden border-b-[10px] border-text"
+    <div
+      class="absolute bottom-0 right-0 -z-40 translate-y-[55%] translate-x-[55%]"
     >
-        <div
-            class="absolute bottom-0 right-0 -z-10 translate-y-[55%] translate-x-[55%] overflow-x-hidden"
-        >
-            <Fragment set:html={circles} />
-        </div>
+      <Fragment set:html={circles} />
+    </div>
 
-        <h2
-            class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-title text-white text-extrusion text-center"
+    <div class="relative flex-auto flex flex-col justify-center px-4">
+      <h1
+        class="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black font-title text-center relative text-extrusion text-white"
+      >
+        <span class="relative">
+          {t("header.firstPart")}
+        </span>
+        <br />
+        <span
+          class="font-serif text-[5rem] md:text-[6.25rem] lg:text-[7.75rem] xl:text-[9.75rem]"
+          >{t("header.secondPart")}</span
         >
-            {t("articles.title.firstPart")}
-            <br />
+      </h1>
+
+      <div class="mt-12 mx-auto pr-4 w-full">
+        <Button
+          class="max-sm:w-full w-max mx-auto"
+          kind="peach-orange"
+          data-scroll-to
+          href="#contact"
+        >
+          {t("header.cta")}
+        </Button>
+      </div>
+    </div>
+
+    <Marquee
+      speed={100}
+      direction="reverse"
+      class="bg-green-300 inline-flex items-center py-4 border-y-[10px] border-text"
+      should-not-stop-on-hover
+    >
+      {
+        Array.from({ length: 30 }).map((_, i) => (
+          <>
             <span
-                class="text-[2.75rem] sm:text-[3.5rem] md:text-[5rem] lg:text-[6.25rem] xl:text-[7.75rem] font-serif"
-                >{t("articles.title.secondPart")}</span
+              class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black font-title uppercase italic text-text"
+              id={i > 5 ? "first-hidden-item" : ""}
             >
-        </h2>
+              {t("header.marquee")}
+            </span>
+            <span class="ml-2">&#x25cf;</span>
+          </>
+        ))
+      }
+    </Marquee>
+  </header>
 
-        <div
-            class="scrollable w-full py-8 sm:py-32 flex flex-row relative overflow-x-hidden z-10 gap-1 gap-x-16 gap-y-8 justify-center max-xl:grid"
-        >
-            {
-                articles.map((article) => (
-                    <>
-                        <Project
-                            {lang}
-                            class="h-96 w-128 p-4 relative max-md:hidden"
-                            kind={article.data.color}
-                        >
-                            <h3 class="text-3xl font-bold font-title text-text lowercase text-center">
-                                {article.data.title}
-                            </h3>
+  <section
+    class="py-8 sm:py-32 sm:pb-0 bg-peach-orange-300 border-b-[10px] border-text"
+  >
+    <h2
+      class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-title text-extrusion text-white max-md:leading-16 md:px-16 max-md:text-center"
+    >
+      {t("projects.title.firstPart")}
+      <br />
+      <span
+        class="font-serif text-[2.75rem] sm:text-[3.5rem] md:text-[5rem] lg:text-[6.25rem] xl:text-[7.75rem]"
+      >
+        {t("projects.title.secondPart")}
+      </span>
+    </h2>
 
-                            <a
-                                href={`/${lang}/articles/${article.id.split("/").slice(1).join("/")}`}
-                                class="mt-8 text-lg text-text bg-white px-4 py-2 absolute bottom-4 left-4 uppercase font-title tracking-wide border-[5px] border-text"
-                            >
-                                {t("articles.read")}
-                            </a>
-                        </Project>
+    <div class="flex flex-col mt-16 max-md:hidden">
+      {
+        images.map((project) => (
+          <a
+            href={project.url}
+            class="px-16 py-12 hover:bg-peach-orange-900/10 transition-all duration-150 group relative flex flex-row justify-between"
+          >
+            <div>
+              <h3 class="font-serif italic font-bold text-5xl text-peach-orange-950">
+                {project.title}
+              </h3>
 
-                        <article
-                            class={cn(
-                                "border-[5px] border-text p-4 sm:p-8 md:hidden",
-                                firstColor[article.data.color],
-                            )}
-                        >
-                            <h3 class="text-2xl font-bold font-title text-text lowercase">
-                                {article.data.title}
-                            </h3>
-                            <p class="mt-2 text-lg text-text">
-                                {article.data.description}
-                            </p>
-                            <a
-                                href={`/${lang}/articles/${article.id.split("/").slice(1).join("/")}`}
-                                class="mt-4 inline-block px-6 py-3 bg-text text-white font-semibold hover:bg-opacity-70 transition-colors font-title lowercase tracking-wider w-full text-center"
-                            >
-                                {t("articles.read")}
-                            </a>
-                        </article>
-                    </>
-                ))
-            }
-        </div>
-    </section>
+              <p class="mt-4 text-peach-orange-950 font-serif text-2xl">
+                {project.description}
+              </p>
+            </div>
 
-    <Footer {lang} />
+            <span>
+              <Icon
+                is:raw
+                stroke-width={1}
+                name="tabler:arrow-up-right"
+                class="text-peach-orange-950 size-16 transition-all duration-300 opacity-100 group-hover:opacity-0 **:stroke-1"
+              />
+            </span>
+
+            <div class="group-hover:rotate-12 group-hover:opacity-100 opacity-0 -top-16 transition-all duration-300 delay-75 absolute right-16 z-50">
+              <Image
+                src={project.image}
+                alt={project.description}
+                width={800}
+                height={600}
+                class="size-64 object-cover border-[5px] border-text"
+              />
+
+              <div
+                class="absolute top-0 left-0 group-hover:top-4 group-hover:left-4 size-64 border-[5px] border-text delay-200 transition-all duration-150 -z-10"
+                class:list={secondColor[project.color]}
+              />
+
+              <div
+                class="absolute top-0 left-0 group-hover:top-8 group-hover:left-8 size-64 border-[5px] border-text delay-200 transition-all duration-150 -z-20"
+                class:list={thirdColor[project.color]}
+              />
+            </div>
+          </a>
+        ))
+      }
+    </div>
+    <div class="md:hidden z-20 grid px-4 gap-4 mt-16">
+      {
+        images.map((image) => (
+          <article class="border-[5px] border-text">
+            <Image
+              src={image.image}
+              alt={image.description}
+              width={400}
+              height={300}
+              class="h-96 w-full object-cover border-b-[5px] border-text"
+            />
+
+            <div class={cn("p-4", firstColor[image.color])}>
+              <h3 class="text-2xl font-bold font-title text-text lowercase">
+                {image.title}
+              </h3>
+              <p class="mt-2 text-lg text-text">{image.description}</p>
+              <a
+                href={image.url}
+                class="mt-4 inline-block px-6 py-3 bg-text text-white font-semibold hover:bg-opacity-70 transition-colors font-title lowercase tracking-wider w-full text-center"
+              >
+                {t("projects.cta")}
+              </a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section
+    id="articles"
+    class="py-8 sm:py-32 px-4 bg-background relative z-10 overflow-hidden border-b-[10px] border-text"
+  >
+    <h2
+      class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-title text-white text-extrusion text-center"
+    >
+      {t("articles.title.firstPart")}
+      <br />
+      <span
+        class="text-[2.75rem] sm:text-[3.5rem] md:text-[5rem] lg:text-[6.25rem] xl:text-[7.75rem] font-serif"
+        >{t("articles.title.secondPart")}</span
+      >
+    </h2>
+
+    <div
+      class="scrollable w-full py-8 sm:py-32 flex flex-row relative overflow-x-hidden z-10 gap-16 justify-center max-xl:grid"
+    >
+      {
+        articles.map((article) => (
+          <>
+            <Project
+              {lang}
+              class="h-96 w-128 p-4 relative max-md:hidden"
+              kind={article.data.color}
+            >
+              <h3 class="text-3xl font-bold font-title text-text lowercase text-center">
+                {article.data.title}
+              </h3>
+
+              <a
+                href={`/${lang}/articles/${article.id.split("/").slice(1).join("/")}`}
+                class="mt-8 text-lg text-text bg-white px-4 py-2 absolute bottom-4 left-4 uppercase font-title tracking-wide border-[5px] border-text"
+              >
+                {t("articles.read")}
+              </a>
+            </Project>
+
+            <article
+              class={cn(
+                "border-[5px] border-text p-4 sm:p-8 md:hidden",
+                firstColor[article.data.color]
+              )}
+            >
+              <h3 class="text-2xl font-bold font-title text-text lowercase">
+                {article.data.title}
+              </h3>
+              <p class="mt-2 text-lg text-text">{article.data.description}</p>
+              <a
+                href={`/${lang}/articles/${article.id.split("/").slice(1).join("/")}`}
+                class="mt-4 inline-block px-6 py-3 bg-text text-white font-semibold hover:bg-opacity-70 transition-colors font-title lowercase tracking-wider w-full text-center"
+              >
+                {t("articles.read")}
+              </a>
+            </article>
+          </>
+        ))
+      }
+    </div>
+
+    <div
+      class="absolute bottom-0 right-0 -z-10 translate-y-[55%] translate-x-[55%] overflow-x-hidden"
+    >
+      <Fragment set:html={circles} />
+    </div>
+  </section>
+
+  <Footer {lang} />
 </Layout>
