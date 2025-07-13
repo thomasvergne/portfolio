@@ -1,10 +1,10 @@
 ---
 import type { HTMLAttributes } from "astro/types";
 import { cva, type VariantProps } from "cva";
-import { cn } from "./css";
+import { cn } from "../css";
 import { Icon } from "astro-icon/components";
-import { firstColor, secondColor, thirdColor } from "./colors";
-import { useTranslations } from "#/i18n/utils";
+import { firstColor, secondColor, thirdColor } from "../colors";
+import { fetchTranslations } from "#/i18n/utils";
 import type { Languages } from "#/i18n/ui";
 
 export interface Project {
@@ -31,7 +31,7 @@ interface Props
 
 const { project, kind = "black", class: className, lang, ...props } = Astro.props;
 
-const t = useTranslations(lang);
+const t = fetchTranslations(lang);
 ---
 
 <div class="relative group" {...props}>

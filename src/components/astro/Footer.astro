@@ -1,9 +1,9 @@
 ---
 import type { Languages } from "#/i18n/ui";
-import { useTranslations } from "#/i18n/utils";
+import { fetchTranslations } from "#/i18n/utils";
 import type { HTMLAttributes } from "astro/types";
 import Button from "./Button.astro";
-import { cn } from "./css";
+import { cn } from "../css";
 
 interface Props extends HTMLAttributes<"footer"> {
     lang: Languages;
@@ -11,7 +11,7 @@ interface Props extends HTMLAttributes<"footer"> {
 
 const { lang, class: className, ...props } = Astro.props;
 
-const t = useTranslations(lang);
+const t = fetchTranslations(lang);
 
 const socialLinks = [
     {

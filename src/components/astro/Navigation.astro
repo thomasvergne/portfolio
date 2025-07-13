@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import { defaultLang, type Languages, languagesNames } from "#/i18n/ui";
-import { useTranslations } from "#/i18n/utils";
+import { fetchTranslations } from "#/i18n/utils";
 import { Image } from "astro:assets";
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 
 const { lang = defaultLang } = Astro.props;
 
-const t = useTranslations(lang);
+const t = fetchTranslations(lang);
 
 const links = [
   {
