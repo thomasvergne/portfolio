@@ -1,0 +1,6 @@
+fn welcome<A extends show>(name: A) {
+  println("Hello, $name!")
+}
+
+welcome("world")
+welcome(42)
