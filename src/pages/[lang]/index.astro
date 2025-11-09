@@ -11,6 +11,12 @@ import { getCollection } from "astro:content";
 import Navigation from "#/components/Navigation.astro";
 import Footer from "#/components/Footer.astro";
 
+import bonzaiCode from "#/projects/code/bonzai.bzi?raw";
+import plumeCode from "#/projects/code/plume.plm?raw";
+import realityCode from "#/projects/code/reality.rl?raw";
+import { Code } from "astro:components";
+import { Icon } from "astro-icon/components";
+
 export const getStaticPaths = (() => {
   const languages = Object.keys(ui) as Languages[];
 
@@ -49,72 +55,90 @@ const articles = (await getCollection("blog"))
 
     return bDate.getTime() - aDate.getTime();
   });
+
+const programmingLanguages = [
+  {
+    name: "Plume",
+    url: "https://github.com/plume-lang/plume",
+    color: ["from-orange-400", "to-pink-400"],
+    code: plumeCode,
+  },
+  {
+    name: "Bonzai",
+    url: "https://github.com/bonzai-lang/bonzai",
+    color: ["from-green-400", "to-blue-400"],
+    code: bonzaiCode,
+  },
+  {
+    name: "Reality",
+    url: "https://github.com/thomasvergne/reality-lang",
+    color: ["from-purple-400", "to-indigo-400"],
+    code: realityCode,
+  },
+];
 ---
 
 <Layout title="Thomas Vergne" description="" class="bg-neutral-100">
   <Navigation {lang} />
 
-  <header class="max-w-4xl mx-auto py-32 pt-16 max-md:pb-0 max-md:px-4">
+  <header class="max-w-4xl mx-auto pb-48 pt-16 max-md:pb-0 max-md:px-4">
     <h2
-      class="text-2xl md:text-4xl max-w-2xl leading-8 md:leading-12 text-neutral-700"
+      class="text-2xl md:text-4xl max-w-4xl text-justify leading-8 md:leading-12 text-neutral-700"
     >
       {t("header")}
     </h2>
   </header>
 
-  <div class="relative">
-    <span class="absolute -top-8 right-16 max-md:hidden">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 25 25"
-        class="size-16 fill-neutral-700"
-      >
-        <path
-          d="m17.5 5.999-.707.707 5.293 5.293H1v1h21.086l-5.294 5.295.707.707L24 12.499l-6.5-6.5z"
-          data-name="Right"></path>
-      </svg>
-    </span>
-    <section
-      class="md:flex grid py-16 gap-8 overflow-x-hidden scrollable relative"
-      id="projects"
-    >
-      {
-        Object.entries(images).map(([key, { image, url }]) => {
-          const parsedKey = key as ImageKey;
+  <div class="relative pt-24 pb-48 bg-neutral-950" id="projects">
+    <section class="max-w-4xl mx-auto py-16" id="about">
+      <h2 class="text-4xl text-white mb-8">
+        {t("projects.title")}
+      </h2>
 
-          const projectName = t(`carousel.${parsedKey}.title`);
-          const projectDescription = t(`carousel.${parsedKey}.description`);
-
-          return (
-            <div class="flex-[0_0_auto] md:w-2/5 relative group">
-              <Image
-                src={image}
-                alt="Project image"
-                class="w-full"
-                width={400}
-                height={300}
-              />
-              <div class="md:absolute md:inset-0 md:h-full md:w-full md:group-hover:bg-black/75 md:group-hover:backdrop-blur-lg transition-all duration-200 grid md:place-items-center md:opacity-0 md:group-hover:opacity-100 p-4">
-                <div class="max-w-sm w-full">
-                  <h3 class="text-white max-md:text-neutral-800 text-2xl">
-                    {projectName}
-                  </h3>
-                  <p class="text-white/80 max-md:text-neutral-700/70">
-                    {projectDescription}
-                  </p>
-
-                  <a href={url}>
-                    <button class="text-white max-md:text-neutral-700 mt-4 hover:underline underline-offset-4">
-                      {t("carousel.button")}
-                    </button>
-                  </a>
-                </div>
-              </div>
-            </div>
-          );
-        })
-      }
+      <p class="text-white/80 text-lg">
+        {t("projects.description")}
+      </p>
     </section>
+
+    <div class="grid grid-cols-3 gap-8">
+      {
+        programmingLanguages.map(({ name, url, color, code }) => (
+          <article class="relative overflow-hidden bg-white min-h-96 h-full grid place-items-center">
+            <header class="relative z-20 w-full p-8 h-full flex flex-col">
+              <h3 class="text-neutral-800 text-2xl">{name}</h3>
+
+              <Code
+                {code}
+                class="w-full block p-4 mt-8 shadow-xl"
+                theme="vitesse-black"
+              />
+
+              <span class="flex-auto mb-8" />
+
+              <div class="flex justify-end items-center gap-x-4">
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="bg-white p-2"
+                >
+                  <Icon
+                    name="tabler:link"
+                    is:raw
+                    class="text-neutral-800 text-2xl !*:stroke-1"
+                  />
+                </a>
+              </div>
+            </header>
+
+            <div class="absolute inset-0 backdrop-blur-[200px] h-full w-full block z-10" />
+            <div
+              class={`absolute inset-x-0 mx-auto blur-[200px]  bg-gradient-to-r ${color[0]} ${color[1]} size-96 -bottom-32 opacity-50 rounded-full z-0`}
+            />
+          </article>
+        ))
+      }
+    </div>
   </div>
 
   <section class="py-16" id="articles">
@@ -137,16 +161,13 @@ const articles = (await getCollection("blog"))
           const url = `/${lang}/articles/${id.split("/").slice(1).join("/")}`;
 
           return (
-            <article class="relative group">
-              <Image
-                src={image ?? "/articles/placeholder.png"}
-                alt="Project image"
-                class="w-full"
-                width={400}
-                height={300}
-              />
+            <article class="relative h-96 bg-neutral-950 overflow-hidden">
+              <div class="absolute h-full w-full inset-0 backdrop-blur-3xl z-10" />
 
-              <div class="md:absolute md:inset-0 md:h-full md:w-full md:group-hover:bg-black/50 md:group-hover:backdrop-blur-lg transition-all duration-200 grid md:place-items-center md:opacity-0 md:group-hover:opacity-100 p-4">
+              <div class="absolute inset-x-0 mx-auto size-96 bg-gradient-to-r from-neutral-800 to-neutral-600 blur-[200px] -bottom-32 rounded-full z-0" />
+
+
+              <div class="md:absolute md:inset-0 md:h-full md:w-full transition-all duration-200 z-20 md:place-items-center p-4 flex flex-col h-max justify-center">
                 <div class="max-w-md 2xl:max-w-xl w-full">
                   <h3 class="text-white max-md:text-neutral-800 text-2xl">
                     {title}
