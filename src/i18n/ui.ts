@@ -1,163 +1,139 @@
 export const ui = {
-	en: {
+  en: {
     toc: "Table of contents",
 
-		navbar: {
-			links: {
-				projects: "Projects",
-				blog: "Articles",
-				contact: "Contact",
-			},
-		},
-		header:
-			"Hey, I'm a web developer based in France. I've been passionate about coding for over 7 years now.",
+    navbar: {
+      links: {
+        projects: "Projects",
+        blog: "Articles",
+        contact: "Contact",
+      },
+    },
+    header:
+      "Hey! I'm a software developer based in France. I've been passionate about programming language theory for over 5 years now.",
 
-		carousel: {
-			button: "Visit the website",
-			lca: {
-				title: "La Couture d'Amandine",
-				description: "A description of La Couture d'Amandine.",
-			},
+    projects: {
+      title: "I write compilers and sometimes blog about it.",
+      description:
+        "I build compilers as a hobby, mostly for fun and learning purposes. My favorite study fields are type systems, optimization techniques, code generation, and language design.",
+    },
 
-			ledonvert: {
-				title: "Le Don Vert",
-				description: "A description of Le Don Vert.",
-			},
+    articles: {
+      title: "My articles",
+      description:
+        "A selection of articles I've written about programming languages, illustrated with code examples.",
+      readMore: "Read more",
+      read: "Read this article",
+    },
 
-			numa: {
-				title: "Numa",
-				description: "A description of Numa.",
-			},
-		},
+    contact: {
+      title: "Contact me",
 
-		articles: {
-			title: "My articles",
-			description:
-				"A selection of articles I've written about programming languages, illustrated with code examples.",
-			readMore: "Read more",
-			read: "Read this article",
-		},
+      socials: "My social networks",
 
-		contact: {
-			title: "Contact me",
+      form: {
+        name: "Your full name",
+        email: "Your email address",
+        message: "Your message",
+        send: "Send message",
+        subject: "Message subject",
+      },
 
-			socials: "My social networks",
+      success: {
+        title: "Message sent",
+        description:
+          "Thank you for your message, I will respond as soon as possible.",
+        button: "Return to home",
+      },
 
-			form: {
-				name: "Your full name",
-				email: "Your email address",
-				message: "Your message",
-				send: "Send message",
-				subject: "Message subject",
-			},
+      error: {
+        title: "Error",
+        description:
+          "An error occurred while sending the message. Please try again.",
+        button: "Return to home",
 
-			success: {
-				title: "Message sent",
-				description:
-					"Thank you for your message, I will respond as soon as possible.",
-				button: "Return to home",
-			},
+        missingData: {
+          title: "Missing data",
+          description: "Please fill in all fields of the form.",
+        },
 
-			error: {
-				title: "Error",
-				description:
-					"An error occurred while sending the message. Please try again.",
-				button: "Return to home",
+        invalidEmail: {
+          title: "Invalid email address",
+          description: "Please enter a valid email address.",
+        },
+      },
 
-				missingData: {
-					title: "Missing data",
-					description: "Please fill in all fields of the form.",
-				},
+      back: "Return to home",
+    },
+  },
 
-				invalidEmail: {
-					title: "Invalid email address",
-					description: "Please enter a valid email address.",
-				},
-			},
-
-			back: "Return to home",
-		},
-	},
-
-	fr: {
+  fr: {
     toc: "Table des matières",
 
-		navbar: {
-			links: {
-				projects: "Projets",
-				blog: "Articles",
-				contact: "Contact",
-			},
-		},
-		header:
-			"Salut, je suis un développeur web basé en France. Je suis passionné par le code depuis maintenant plus de 7 ans.",
+    navbar: {
+      links: {
+        projects: "Projets",
+        blog: "Articles",
+        contact: "Contact",
+      },
+    },
+    header:
+      "Salut ! Je suis un développeur logiciel basé en France. Je suis passionné par la théorie des langages de programmation depuis plus de 5 ans.",
 
-		carousel: {
-			button: "Visiter le site",
-			lca: {
-				title: "La Couture d'Amandine",
-				description: "Une description de la couture d'Amandine.",
-			},
+    projects: {
+      title: "J'écris des compilateurs et parfois j'en parle sur mon blog.",
+      description:
+        "Je construis des compilateurs par passion, principalement pour le plaisir et l'apprentissage. Mes domaines d'étude préférés sont les systèmes de types, les techniques d'optimisation, la génération de code et la conception de langages.",
+    },
 
-			ledonvert: {
-				title: "Le Don Vert",
-				description: "Une description du Don Vert.",
-			},
+    articles: {
+      title: "Mes articles",
+      description:
+        "Une sélection d'articles que j'ai écrits sur les langages de programmation, illustrés par des exemples de code.",
+      readMore: "En savoir plus",
+      read: "Lire cet article",
+    },
 
-			numa: {
-				title: "Numa",
-				description: "Une description de Numa.",
-			},
-		},
+    contact: {
+      title: "Me contacter",
 
-		articles: {
-			title: "Mes articles",
-			description:
-				"Une sélection d'articles que j'ai écrits sur les langages de programmation, illustrés par des exemples de code.",
-			readMore: "En savoir plus",
-			read: "Lire cet article",
-		},
+      socials: "Mes réseaux sociaux",
 
-		contact: {
-			title: "Me contacter",
+      form: {
+        name: "Votre nom et prénom",
+        email: "Votre adresse e-mail",
+        message: "Votre message",
+        send: "Envoyer le message",
+        subject: "Sujet du message",
+      },
 
-			socials: "Mes réseaux sociaux",
+      success: {
+        title: "Message envoyé",
+        description:
+          "Merci pour votre message, je vous répondrai dès que possible.",
+        button: "Retourner à l'accueil",
+      },
 
-			form: {
-				name: "Votre nom et prénom",
-				email: "Votre adresse e-mail",
-				message: "Votre message",
-				send: "Envoyer le message",
-				subject: "Sujet du message",
-			},
+      error: {
+        title: "Erreur",
+        description:
+          "Une erreur s'est produite lors de l'envoi du message. Veuillez réessayer.",
+        button: "Retourner à l'accueil",
 
-			success: {
-				title: "Message envoyé",
-				description:
-					"Merci pour votre message, je vous répondrai dès que possible.",
-				button: "Retourner à l'accueil",
-			},
+        missingData: {
+          title: "Données manquantes",
+          description: "Veuillez remplir tous les champs du formulaire.",
+        },
 
-			error: {
-				title: "Erreur",
-				description:
-					"Une erreur s'est produite lors de l'envoi du message. Veuillez réessayer.",
-				button: "Retourner à l'accueil",
+        invalidEmail: {
+          title: "Adresse e-mail invalide",
+          description: "Veuillez entrer une adresse e-mail valide.",
+        },
+      },
 
-				missingData: {
-					title: "Données manquantes",
-					description: "Veuillez remplir tous les champs du formulaire.",
-				},
-
-				invalidEmail: {
-					title: "Adresse e-mail invalide",
-					description: "Veuillez entrer une adresse e-mail valide.",
-				},
-			},
-
-			back: "Retourner à l'accueil",
-		},
-	},
+      back: "Retourner à l'accueil",
+    },
+  },
 } as const;
 
 export const languagesNames: Record<Languages, [string, string]> = {
