@@ -5,3 +5,5 @@ date: 2021-07-01
 author: Thomas Vergne
 image: /articles/closure-conversion.webp
 ---
+
+Currently not translated into plain English.

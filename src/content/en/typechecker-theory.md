@@ -6,4 +6,4 @@ author: Thomas Vergne
 image: /articles/typechecker.webp
 ---
 
-## Introduction
+Currently not translated into plain English.
