@@ -64,7 +64,7 @@ const programmingLanguages = [
 <Layout title="Thomas Vergne" description="" class="bg-neutral-100">
   <Navigation {lang} />
 
-  <header class="max-w-4xl mx-auto pb-48 pt-16 max-md:pb-0 max-md:px-4">
+  <header class="max-w-4xl mx-auto pb-48 pt-16 max-md:pb-16 max-lg:px-4">
     <h2
       class="text-2xl md:text-4xl max-w-4xl text-justify leading-8 md:leading-12 text-neutral-700"
     >
@@ -73,7 +73,7 @@ const programmingLanguages = [
   </header>
 
   <div class="relative pt-24 pb-48 bg-neutral-950" id="projects">
-    <section class="max-w-4xl mx-auto py-16" id="about">
+    <section class="max-w-4xl mx-auto py-16 max-lg:p-4" id="about">
       <h2 class="text-4xl text-white mb-8">
         {t("projects.title")}
       </h2>
@@ -83,16 +83,16 @@ const programmingLanguages = [
       </p>
     </section>
 
-    <div class="grid grid-cols-3 gap-8">
+    <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-8 mt-16">
       {
         programmingLanguages.map(({ name, url, color, code }) => (
-          <article class="relative overflow-hidden bg-white min-h-96 h-full grid place-items-center">
+          <article class="relative overflow-hidden bg-white min-h-96 h-full w-full grid place-items-center">
             <header class="relative z-20 w-full p-8 h-full flex flex-col">
               <h3 class="text-neutral-800 text-2xl">{name}</h3>
 
               <Code
                 {code}
-                class="w-full block p-4 mt-8 shadow-xl"
+                class="p-4 mt-8 shadow-xl overflow-x-auto [&>code]:whitespace-pre-wrap whitespace-pre max-w-full w-full"
                 theme="vitesse-black"
               />
 
@@ -144,25 +144,24 @@ const programmingLanguages = [
           const url = `/${lang}/articles/${id.split("/").slice(1).join("/")}`;
 
           return (
-            <article class="relative h-96 bg-neutral-950 overflow-hidden">
+            <article class="relative h-96 bg-neutral-950 overflow-hidden grid place-items-center">
               <div class="absolute h-full w-full inset-0 backdrop-blur-3xl z-10" />
 
               <div class="absolute inset-x-0 mx-auto size-96 bg-gradient-to-r from-neutral-800 to-neutral-600 blur-[200px] -bottom-32 rounded-full z-0" />
 
-
-              <div class="md:absolute md:inset-0 md:h-full md:w-full transition-all duration-200 z-20 md:place-items-center p-4 flex flex-col h-max justify-center">
+              <div class="relative z-20 md:place-items-center p-4 flex flex-col h-max justify-center">
                 <div class="max-w-md 2xl:max-w-xl w-full">
-                  <h3 class="text-white max-md:text-neutral-800 text-2xl">
+                  <h3 class="text-white text-2xl">
                     {title}
                   </h3>
 
-                  <p class="text-white/80 max-md:text-neutral-700/70 mt-4">
+                  <p class="text-white/80 mt-4">
                     {description}
                   </p>
 
                   <a
                     href={url}
-                    class="text-white max-md:text-neutral-700 mt-4 inline-block hover:underline underline-offset-4"
+                    class="text-white mt-4 inline-block hover:underline underline-offset-4"
                   >
                     {t("articles.read")}
                   </a>
